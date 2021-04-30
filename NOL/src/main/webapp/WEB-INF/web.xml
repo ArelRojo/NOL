@@ -9,4 +9,41 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Log0</display-name>
+    <servlet-name>Log0</servlet-name>
+    <servlet-class>servlet.Log0</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Log0</servlet-name>
+    <url-pattern>/Log0Post</url-pattern>
+    <url-pattern>/Log0Get</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Log1</display-name>
+    <servlet-name>Log1</servlet-name>
+    <servlet-class>servlet.Log1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Log1</servlet-name>
+    <url-pattern>/Log1Post</url-pattern>
+    <url-pattern>/Log1Get</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Log2</display-name>
+    <servlet-name>Log2</servlet-name>
+    <servlet-class>servlet.Log2</servlet-class>
+        <init-param>
+      <param-name>logFile</param-name>
+      <param-value>C://logs/log2</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Log2</servlet-name>
+    <url-pattern>/Log2Post</url-pattern>
+    <url-pattern>/Log2Get</url-pattern>
+  </servlet-mapping>
 </web-app>
