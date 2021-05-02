@@ -38,7 +38,7 @@
     <servlet-class>servlet.Log2</servlet-class>
         <init-param>
       <param-name>logFile</param-name>
-      <param-value>C://logs/log2</param-value>
+      <param-value>/home/user/Escritorio/log2</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>

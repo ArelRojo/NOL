@@ -51,7 +51,7 @@ public class Log2 extends HttpServlet {
 		out.println("<body>");
 		out.println("Nombre introducido: " + datos_formulario);
 		out.println("<br>");
-		out.println("Puede encontrar más información en el log2");
+		out.println("Puede encontrar más información en el log2 que se encuentra en la ruta /home/user/Escritorio/log2");
 		out.println("</body>");
 		out.println("</html>");
 		
