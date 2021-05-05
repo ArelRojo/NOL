@@ -42,7 +42,7 @@ public class Log0 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		
+		Log0 log0 = new Log0();
 		HttpServletRequest myrequest = (HttpServletRequest) request;
 		Date fecha = new Date();
 		String datos_formulario = request.getParameter("nombre");
