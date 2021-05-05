@@ -28,7 +28,7 @@ import org.apache.hc.core5.http.message.BasicNameValuePair;
  */
 public class Log0 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    HttpClient httpClient = null;
+    HttpClients httpClient = null;
     /**
      * Constructor de la clase
      */
@@ -42,7 +42,7 @@ public class Log0 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		httpClient = new 
+		
 		HttpServletRequest myrequest = (HttpServletRequest) request;
 		Date fecha = new Date();
 		String datos_formulario = request.getParameter("nombre");
