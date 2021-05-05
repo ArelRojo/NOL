@@ -1,5 +1,6 @@
 package servlet;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Log1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String FILE_NAME = "C://logs/log1";
+	private static String FILE_NAME = "/home/user/Escritorio/log1";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,7 +52,7 @@ public class Log1 extends HttpServlet {
 			out.println("<body>");
 			out.println("Nombre introducido: " + datos_formulario);
 			out.println("<br>");
-			out.println("Puede encontrar más información en el log1");
+			out.println("Puede encontrar más información en el log1 que se encuentra en la ruta: /home/user/Escritorio/log1");
 			out.println("</body>");
 			out.println("</html>");
 			
