@@ -36,7 +36,7 @@
     <display-name>Log2</display-name>
     <servlet-name>Log2</servlet-name>
     <servlet-class>servlet.Log2</servlet-class>
-        <init-param>
+    <init-param>
       <param-name>logFile</param-name>
       <param-value>/home/user/Escritorio/log2</param-value>
     </init-param>
@@ -45,5 +45,15 @@
     <servlet-name>Log2</servlet-name>
     <url-pattern>/Log2Post</url-pattern>
     <url-pattern>/Log2Get</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CatApi</display-name>
+    <servlet-name>CatApi</servlet-name>
+    <servlet-class>servlet.CatApi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CatApi</servlet-name>
+    <url-pattern>/CatApi</url-pattern>
   </servlet-mapping>
 </web-app>

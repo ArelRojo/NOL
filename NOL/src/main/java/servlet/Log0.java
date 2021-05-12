@@ -1,6 +1,5 @@
 package servlet;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -11,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class Log0
  */
 public class Log0 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
        
     /**
      * Constructor de la clase
@@ -30,6 +31,7 @@ public class Log0 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
+
 		HttpServletRequest myrequest = (HttpServletRequest) request;
 		Date fecha = new Date();
 		String datos_formulario = request.getParameter("nombre");
