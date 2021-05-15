@@ -1,0 +1,179 @@
+@charset "ISO-8859-1";
+
+@font-face{
+	font-family: 'Nunito';
+	src: url(fonts/Nunito-Regular.ttf);
+}
+
+
+
+
+
+*{
+	margin: 0px;
+	padding: 0px;
+	font-family: "Nunito";
+}
+
+#body{
+/* 	background-color: rgba(197, 197, 197, 0.9); */
+	background-color: #d4d4d4;
+background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='%23a7a6a9' fill-opacity='0.58' fill-rule='evenodd'/%3E%3C/svg%3E");
+	}
+
+#encabezado{
+	height: 92px;
+}
+
+
+
+.container{
+/* 	background-color: #f6f6f6; */
+	background-color: #ececec;
+	
+}
+
+#img-wrap{
+	margin-left: -1.2%;
+	width: 20%;
+	height: 100%;
+	
+}
+
+#img-wrap img{
+	height: 100%;
+}
+
+#img-wrap img:hover{
+	transform: scale(1.05,1.05);
+}
+
+#bienvenida{
+	margin-left: -35%;
+	margin-top: 3%;
+	font-size: 40px;
+	color: #393838;	
+}
+
+#separador{
+	width: 102.%;
+	height: 44px;
+    background-color: #393838;
+    
+    
+}
+
+.img-fija{
+	background: url("../img/redes.jpg");
+	background-position: 25% 75%;
+	height: 80px;
+	margin-bottom: 5%;
+}
+
+
+.formulario{
+	
+	background-color: #939393;
+	margin-right: 2%;
+	margin-bottom: 2%;
+	border: 1px solid #6c6c6c;
+	border-radius: 4px;
+/* 	box-shadow: 3px -3px 3px  #b2b2b2; */
+}
+
+.formulario h2{
+	font-size: 25px;
+	text-align: center;
+	
+}
+
+
+
+.margin-h2{
+	border: 1px solid #6c6c6c;
+	border-radius: 4px 4px 0px 0px;
+	background-color: #f9bf5b;
+	margin-bottom: 8%;
+}
+
+.texto{
+	text-align:center;
+}
+
+hr{
+	
+	color: black;
+	
+}
+
+.encabezado-form{
+	display: block;
+	
+}
+
+/* .encabezado-form:hover{
+	transform: scale(1.05,1.05);
+	text-shadow: 1px 1px  #292929;
+} */
+
+form label{
+	font-size: 20px;
+}
+
+
+.btn-enviar{
+	margin-top: 12%;
+	margin-bottom: 4%;
+	width: 40%;
+	border: 1px solid #7b7b7b;
+	border-radius: 1px;
+	background-color: black;
+	color: white;
+}
+
+.formulario input[type="text"]:focus,
+.formulario input[type="password"]:focus{
+	background-color: #e4e4e4;
+}
+
+.formulario input[type="submit"]:hover{
+	background-color:#3596cd;
+	border-radius: 4px;
+}
+
+form input{
+	width: 65%;
+}
+
+form .row {
+	margin-left: 2%;
+}
+
+
+.fa{
+	color: black;
+	margin-top: 6px;
+}
+
+.label-icon{
+	margin-top: 5%;
+}
+
+#grupo{
+	margin-left: 19%;
+	margin-top: -2.5%;
+}
+
+#encabezado-grupo{
+	font-size: 16px;
+/* 	text-align: center; */
+	background-color: #f9bf5b;
+	border: 1px solid black;
+	border-radius: 4px;
+	height: 30px;
+}
+
+#footer{
+	background-color: #393838;
+	color: white;
+}
