@@ -85,16 +85,14 @@
     <auth-method>BASIC</auth-method>
     <realm-name>SecuredApp</realm-name>
   </login-config>
-  
-<!-- <filter>
-    <display-name>AuthenticationFilter</display-name>
-    <filter-name>AuthenticationFilter</filter-name>
-    <filter-class>filtro.AuthenticationFilter</filter-class>
-  </filter>
-  
-  <filter-mapping>
-    <filter-name>AuthenticationFilter</filter-name>
-    <servlet-name>Authentication</servlet-name>
-  </filter-mapping>  -->  
-  
+  <servlet>
+    <description></description>
+    <display-name>AuthenticationProfesor</display-name>
+    <servlet-name>AuthenticationProfesor</servlet-name>
+    <servlet-class>servlet.AuthenticationProfesor</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthenticationProfesor</servlet-name>
+    <url-pattern>/AuthenticationProfesor</url-pattern>
+  </servlet-mapping>
 </web-app>

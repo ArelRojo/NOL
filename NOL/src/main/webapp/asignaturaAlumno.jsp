@@ -13,6 +13,7 @@
 
 <!-- Hoja de estilos CSS -->
 <link rel="stylesheet" href="css/styles.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Integración bootstrap -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
@@ -26,6 +27,7 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 <title>Asignaturas</title>
+
 </head>
 
 
@@ -53,18 +55,21 @@
 		<div class="row" id="separador"></div>
 
 		<!-- Inicio main-->
-		<main role="main" class="container">
-			<h4 class="text-center">Asignaturas del/la alumn@ Pepe Garcia</h4>
+		<main role="main" class="container" id="main">
+			<h4 class="text-center">Asignaturas del/la alumn@ <%=request.getSession().getAttribute("nombreAlumno")  %></h4>
+			<div class="row">
 			<div class="col-4">
 			<div class="list-group" id="list-tab" role="tablist">
 
-				<%
 
+				<%
+				
 List<Asignatura> asignaturas = ((List<Asignatura>)request.getSession().getAttribute("asignaturas"));
+List<String> acronimos= ((List<String>)request.getSession().getAttribute("acronimos"));
 
 for(int i = 0; i< asignaturas.size();i++){
-String cadena = "<a class=\"list-group-item list-group-item-action\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\">";
-cadena = cadena +asignaturas.get(i).getAsignatura();
+String cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"asignatura-"+i+"\">";
+cadena = cadena + asignaturas.get(i).getAsignatura();
 cadena = cadena + "</a>";
 
 out.println(cadena);
@@ -73,24 +78,53 @@ out.println(cadena);
 %>
 				
 			</div>
+			</div>
 			<div class="col-8">
-				<div class="tab-content" id="nav-tabContent">
-					<div class="tab-pane fade show" role="tabpanel"
-						aria-labelledby="list-home-list">
-						<p>Detalles</p>
+				<div  id="nav-tabContent">
+					<div 
+						>
+						<%
+						for(int i = 0; i< asignaturas.size();i++){
+							
+							String nombreAsignatura = "<p id=\"asignatura-"+i+"-detalle\" class=\"d-none panel-derecha\" >";
+							nombreAsignatura  = nombreAsignatura + acronimos.get(i);
+							nombreAsignatura = nombreAsignatura +"</p>";
+							out.println(nombreAsignatura);
+							String nota = "<p id=\"asignatura-"+i+"-nota\" class=\"d-none panel-derecha\" >";
+							nota = nota+ asignaturas.get(i).getNota();
+							nota = nota +"</p>";
+							out.println(cadena);
+						}
+						%>
 					</div>
 				</div>
+			</div>
 			</div>
 		</main>
 		<!-- Fin main -->
 
 		<footer>
 			<div class="row" id="footer">
-				<p>La aplicación NOL se trata de un sistema de consulta de
+				<p> &nbsp; La aplicación NOL se trata de un sistema de consulta de
 					asignaturas y notas para alumnos y profesores</p>
 			</div>
 
 		</footer>
 	</div>
+	<script>
+	$(".boton-izquierda").click(function(){
+		
+		$(".panel-derecha").addClass("d-none")
+		
+		console.log(this.id);
+		var cadena = "#"+this.id +"-detalle";
+		$(cadena).removeClass("d-none");
+		
+		var cadena = "#"+this.id +"-nota";
+		$(cadena).removeClass("d-none");
+		
+	});
+	
+	</script>
 </body>
 </html>

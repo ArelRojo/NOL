@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+import modelo.Alumno;
 import modelo.Asignatura;
+import modelo.DetallesAsignatura;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
@@ -90,16 +93,23 @@ public class Authentication extends HttpServlet {
 
 				List<Asignatura> asignaturas = gson.fromJson(reader, new TypeToken<List<Asignatura>>() {
 				}.getType());
-				request.getSession().setAttribute("asignaturas", asignaturas);
 				
+				List<String> acronimos = new ArrayList();
+				for(int i = 0; i<asignaturas.size(); i++) {
+					String acronimo = asignaturas.get(i).getAsignatura();
+					acronimos.add(this.getNombreAsignatura(acronimo, key, httpClient));
+					
+				}
+				request.getSession().setAttribute("acronimos", acronimos);
+				request.getSession().setAttribute("asignaturas", asignaturas);
+				request.getSession().setAttribute("nombreAlumno", this.getNombreUsuario(map.get("user"), key,httpClient));
 				
 
 				System.out.println(asignaturas);
 
 //           String ru = catsList.get(0).getUrl();
 
-             response.sendRedirect("/NOL/asignaturaAlumno.jsp");
-             
+				response.sendRedirect("/NOL/asignaturaAlumno.jsp");
 
 			} else {
 				System.out.println(httpResponse.getStatusLine().getStatusCode());
@@ -140,6 +150,63 @@ public class Authentication extends HttpServlet {
 		} else {
 			return null;
 		}
+	}
+
+	private String getNombreUsuario(String dni, String key,CloseableHttpClient httpClient) {
+
+		String url = "http://localhost:9090/CentroEducativo/alumnos/" + dni + "?key=" + key;
+		HttpGet httpGet = new HttpGet(url);
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpGet);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+
+//				String json = EntityUtils.toString(httpResponse.getEntity());
+//				System.out.println(json);
+
+				GsonBuilder builder = new GsonBuilder();
+				builder.setPrettyPrinting();
+
+				Gson gson = builder.create();
+				JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
+
+				Alumno alumno = gson.fromJson(reader, new TypeToken<Alumno>() {
+				}.getType());
+
+				return alumno.getNombre() + " " + alumno.getApellidos();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	private String getNombreAsignatura(String acronimo, String key, CloseableHttpClient httpClient) {
+		String url = "http://localhost:9090/CentroEducativo/asignaturas/" + acronimo + "?key=" + key;
+		HttpGet httpGet = new HttpGet(url);
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpGet);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+
+//				String json = EntityUtils.toString(httpResponse.getEntity());
+//				System.out.println(json);
+
+				GsonBuilder builder = new GsonBuilder();
+				builder.setPrettyPrinting();
+
+				Gson gson = builder.create();
+				JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
+
+				DetallesAsignatura asig = gson.fromJson(reader, new TypeToken<DetalleAsignatura>() {
+				}.getType());
+
+				return asig.getNombre();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }
