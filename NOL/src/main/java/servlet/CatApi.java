@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 //Clases de HttpComponents
-//El principal punto de entrada de la API HttpClient es la interfaz HttpClient. Su funciÛn esencial es ejecutar mÈtodos HTTP. Eso implica
+//El principal punto de entrada de la API HttpClient es la interfaz HttpClient. Su funci√≥n esencial es ejecutar m√©todos HTTP. Eso implica
 //uno o varios intercambios de solicitud/respuesta HTTP manejados internamente por HttpClient.
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+
 
 /**
  * Servlet implementation class Login
@@ -46,24 +47,24 @@ public class CatApi<T> extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//CloseableHttpClient es una clase abstracta que es la implementaciÛn base de HttpClient que tambien implementa java.io.Closeable.
+		//CloseableHttpClient es una clase abstracta que es la implementaci√≥n base de HttpClient que tambien implementa java.io.Closeable.
 		//Creando un cliente http. Un cliente se cree para poder consumir un servicio publicado en un endpoint (la url)
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		
-		//Cogemos la url que le pasamos al formulario de la vista que en html tiene como nombre de par·metro "url"
+		//Cogemos la url que le pasamos al formulario de la vista que en html tiene como nombre de par√°metro "url"
 		String url = request.getParameter("url");
 		
-		//El mÈtodo GET se usa para recuperar informaciÛn del servidor dado usando un URI dado. 
-		//Las solicitudes que utilizan GET solo deben recuperar datos y no deben tener ning˙n otro efecto en los datos.
+		//El m√©todo GET se usa para recuperar informaci√≥n del servidor dado usando un URI dado. 
+		//Las solicitudes que utilizan GET solo deben recuperar datos y no deben tener ning√∫n otro efecto en los datos.
 		HttpGet httpGet = new HttpGet(url);
 		
 		try {
-			//Interfaz httpResponse. DespuÈs de recibir e interpretar un mensaje de solicitud el servidor responde con un mensaje de respuesta Http.
+			//Interfaz httpResponse. Despu√©s de recibir e interpretar un mensaje de solicitud el servidor responde con un mensaje de respuesta Http.
 			//aqui le decimos al cliente que ejecute el metodo get (la solicitud) para recuperar el objeto de respuesta.
     		HttpResponse httpResponse= httpClient.execute(httpGet);
     		
     		//Comprobamos que el estado que devuelve el servidor sea un 200. 
-    		//Es un cÛdigo de estado que nos dice que la peticiÛn que acabamos de hacer ha sido entendida, enviada y recibida.
+    		//Es un c√≥digo de estado que nos dice que la petici√≥n que acabamos de hacer ha sido entendida, enviada y recibida.
     		if(httpResponse.getStatusLine().getStatusCode() == 200){
     			
     			//Devolvemos el cuerpo de la respuesta convirtiendo la entidad de respuesta en una cadena (string)
@@ -71,9 +72,9 @@ public class CatApi<T> extends HttpServlet {
                 System.out.println(srtResult);
                 
                 //De forma predeterminada, Gson imprime el JSON en formato compacto. 
-                //Significa que no habr· ning˙n espacio en blanco entre los nombres de campo y su valor,
+                //Significa que no habr√° ning√∫n espacio en blanco entre los nombres de campo y su valor,
                 //campos de objeto y objetos dentro de matrices en la salida JSON, etc.
-                //Para ello habilitamos la funciÛn Pretty Printing. Para hacerlo debemos configurar la Gsoninstancia usando el GsonBuilder.
+                //Para ello habilitamos la funci√≥n Pretty Printing. Para hacerlo debemos configurar la Gsoninstancia usando el GsonBuilder.
                 GsonBuilder builder = new GsonBuilder(); 
                 builder.setPrettyPrinting(); 
                 
@@ -81,23 +82,23 @@ public class CatApi<T> extends HttpServlet {
                 Gson gson = builder.create(); 
                 
                 //La clase JsonReader lee un valor codificado JSON como un flujo de tokens. 
-                //Esta secuencia incluye tanto valores literales (cadenas, n˙meros, valores booleanos y nulos) como los delimitadores de inicio y fin de objetos y matrices. 
+                //Esta secuencia incluye tanto valores literales (cadenas, n√∫meros, valores booleanos y nulos) como los delimitadores de inicio y fin de objetos y matrices. 
                 //Los tokens se atraviesan en orden de profundidad, el mismo orden en que aparecen en el documento JSON. 
-                //Dentro de los objetos JSON, los pares de nombre / valor est·n representados por un solo token.
+                //Dentro de los objetos JSON, los pares de nombre / valor est√°n representados por un solo token.
                 //El Json que queremos leer se encuentra en la respuesta que el servidor envia.
                 JsonReader reader = new JsonReader(new StringReader(srtResult));
                 
-                //El siguiente paso es deserializar este JSON que nos han devuelto. Para ello creamos un objeto que representar· ese 
+                //El siguiente paso es deserializar este JSON que nos han devuelto. Para ello creamos un objeto que representar√° ese 
                 //JSON con sus pares nombre-valor. (Hay que ver la clase java Cats que representa el objeto java al que convertiremos el JSON)
-                //Vemos que la clase Cat es de tipo genÈrico. 
-                //Java a˙n no proporciona una forma de representar tipos genÈricos, por lo que esta clase (TypeToken) lo hace.
-                // Obliga a los clientes a crear una subclase de esta clase que permite recuperar la informaciÛn de tipo incluso en tiempo de ejecuciÛn.
+                //Vemos que la clase Cat es de tipo gen√©rico. 
+                //Java a√∫n no proporciona una forma de representar tipos gen√©ricos, por lo que esta clase (TypeToken) lo hace.
+                // Obliga a los clientes a crear una subclase de esta clase que permite recuperar la informaci√≥n de tipo incluso en tiempo de ejecuci√≥n.
                 
                 List<Cats<T>> catsList = gson.fromJson(reader, new TypeToken<List<Cats<T>>>() {}.getType());
                 
                 System.out.println(catsList);
 
-          //Cogemos el elemento 0 de la lista de Cats (Esta lista siempre tendr· solo un elemento) donde se encuentra el json representado y de ahÌ sacamos 
+          //Cogemos el elemento 0 de la lista de Cats (Esta lista siempre tendr√° solo un elemento) donde se encuentra el json representado y de ah√≠ sacamos 
           //la variable url que encontramos en ese json (La url a donde tenemos que acceder)
            String ru = catsList.get(0).getUrl();
            //Utilizamos sendRedirect para redirigir la respuesta a otro recurso (url en este caso)

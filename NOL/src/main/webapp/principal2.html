@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="Trabajo Nol">
+		<meta name="author" content="3TI21_g1" >
+		
+		<!-- Hoja de estilos CSS -->
+		<link rel="stylesheet" href="css/styles.css">
+		<!-- Integración bootstrap -->
+		<script 
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js">
+		</script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+		
+		<!-- Integración iconos Font Awesome -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+		
+	</head>
+	
+	<body id="body" >
+	
+		<!-- Contenedor principal página -->
+		<div class="container">
+		
+		<!-- Inicio encabezado -->
+			<div class="row align-items-start" id="encabezado">
+				<div class="col-sm-4" id="img-wrap">
+					<a href="https://www.upv.es/">
+						<img src="img/logo3.png">
+					</a>
+				</div>
+				
+				<div class="col-sm-6" >
+					<h1 class="text-center" id="bienvenida">Bienvenid@ a Notas On-line</h1>
+				</div>
+			</div>
+		<!-- Fin encabezado -->
+		
+			<div class="row" id="separador"></div>
+			
+			<div class="row img-fija">
+				
+			</div>
+			
+		<!-- Inicio main-->
+			<main role="main" class="container">
+			
+			<!-- Inicio formulario acceso usuarios -->
+				<div class="row" id="usuario">
+					<div class="col-sm-3 formulario" >
+					
+						<div class="row justify-content-center margin-h2" >
+								<h2 class="text-center encabezado-form">Acceso Alumnos</h2>
+						</div>	
+						
+							<form>
+								<!-- <p>
+									<label for="login-usr">Usuario:</label>
+									<input type="text" name="login-usr"/>
+								</p>
+								<p>	
+									<label for=passw-usr>Contraseña:</label>
+									<input type="password" name="passw-usr"/>
+								</p>
+								
+								<p>
+									<input type="submit" value="Entrar" class="btn-enviar"/>
+								</p> -->
+								
+								<div class="row">
+								<div class="col-sm-12">
+											<p>Para consultar las asignaturas y sus notas como usuario pincha en el siguiente botón</p>
+									</div>
+								
+							</div>
+								<div class="row">
+									<input type="submit" value="Entrar" class="btn-enviar"/>
+								</div>
+							</form>
+					</div>
+			<!-- Fin formulario acceso usuarios -->		
+			
+			
+			<!-- Inicio formulario acceso profesores -->		
+					<div class="col-sm-3 formulario" id="profesor">
+						<div class="row justify-content-center margin-h2">
+							<h2 class="text-center encabezado-form">Acceso Profesores</h2>
+						</div>
+						<form>
+							<!-- <p>
+								
+								<label for="login-teacher" class="texto">Usuario:</label>
+								<input type="text" name="login-teacher"/>
+							</p>
+							<p>	
+								<label for=passw-teacher>Contraseña:</label>
+								<input type="password" name="passw-teacher"/>
+							</p>
+							
+							<p>
+								
+							</p> -->
+							
+							<div class="row">
+								<div class="col-sm-12">
+											<p>Para consultar las asignaturas y las notas como profesor pincha el siguiente botón</p>
+									</div>
+								
+							</div>
+							
+							
+							<div class="row">
+								<input type="submit" value="Entrar" class="btn-enviar"/>
+							</div>
+						</form>
+						
+					</div>
+			 <!-- Fin formulario acceso profesores -->
+					
+			<!-- No sabemos si hace falta poner el grupo -->
+					<div class="col-sm-3" id="grupo">
+						
+						<h3 id="encabezado-grupo" class="text-center">Grupo TI21-G01</h3>
+						
+						
+						<!-- <ul class="list-group">
+						    <li class="list-group-item">Andrés Elorriaga Risueño</li>
+						    <li class="list-group-item">Francisco Roca Blanco</li>
+						    <li class="list-group-item">Gabriel Vidal Peris</li>
+						    <li class="list-group-item">Lisa Saliasi</li>
+						    <li class="list-group-item">Eddy Patrik Morocho</li>
+						    <li class="list-group-item">Óscar Jovaní Beltrán</li>
+						</ul> -->
+						
+						<!-- Lista mediante bootstrap -->
+						<ul class="list-group">
+						    <li class="list-group-item d-flex justify-content-start align-items-center list-group-item-primary">
+						        <span class="badge badge-primary badge-pill">1</span>
+						        Andrés Elorriaga Risueño
+						    </li>
+						    <li class="list-group-item d-flex justify-content-start align-items-center">
+						        <span class="badge badge-primary badge-pill">2</span>
+						        Francisco Roca Blanco
+						    </li>
+						    <li class="list-group-item d-flex justify-content-start align-items-center">
+						        <span class="badge badge-primary badge-pill">3</span>
+						        Gabriel Vidal Peris
+						    </li>
+						    <li class="list-group-item d-flex justify-content-start align-items-center">
+						        <span class="badge badge-primary badge-pill">4</span>
+						        Lisa Saliasi
+						    </li>
+						    <li class="list-group-item d-flex justify-content-start align-items-center">
+						        <span class="badge badge-primary badge-pill">5</span>
+						        Eddy Patrik Morocho
+						    </li>
+						    <li class="list-group-item d-flex justify-content-start align-items-center">
+						        <span class="badge badge-primary badge-pill">6</span>
+						        Óscar Jovaní Beltrán
+						    </li>
+						</ul>
+					
+					</div>
+				</div>
+			</main>
+		<!-- Fin main -->
+		
+		<footer>
+			<div class="row" id="footer">
+				<p>La aplicación NOL se trata de un sistema de consulta de asignaturas y notas en el que se diferencian dos roles</p>
+			</div>
+			
+		</footer>
+		</div>
+	</body>
+</html>
