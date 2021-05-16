@@ -159,6 +159,13 @@ form .row {
 	margin-top: 5%;
 }
 
+#img {
+	width: 130px;
+	float:left;
+	margin-right: 20px;
+}
+
+
 #grupo{
 	margin-left: 19%;
 	margin-top: -2.5%;
@@ -177,3 +184,5 @@ form .row {
 	background-color: #393838;
 	color: white;
 }
+
+
