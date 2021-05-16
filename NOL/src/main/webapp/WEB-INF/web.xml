@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>NOL</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>principal2.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
@@ -56,4 +56,45 @@
     <servlet-name>CatApi</servlet-name>
     <url-pattern>/CatApi</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Authentication</display-name>
+    <servlet-name>Authentication</servlet-name>
+    <servlet-class>servlet.Authentication</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Authentication</servlet-name>
+    <url-pattern>/jsp/Authentication</url-pattern>
+  </servlet-mapping>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>ApplicationContent</web-resource-name>
+      <url-pattern>/jsp/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>rolalu</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-role>
+    <description>
+      The role that is required to access the application
+    </description>
+    <role-name>rolalu</role-name>
+  </security-role>
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>SecuredApp</realm-name>
+  </login-config>
+  
+<!-- <filter>
+    <display-name>AuthenticationFilter</display-name>
+    <filter-name>AuthenticationFilter</filter-name>
+    <filter-class>filtro.AuthenticationFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>AuthenticationFilter</filter-name>
+    <servlet-name>Authentication</servlet-name>
+  </filter-mapping>  -->  
+  
 </web-app>
