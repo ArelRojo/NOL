@@ -14,6 +14,7 @@
 
 <!-- Hoja de estilos CSS -->
 <link rel="stylesheet" href="css/styles.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Integración bootstrap -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
@@ -62,12 +63,16 @@
 			<% List<Alumno> detallealumno= (List<Alumno>)request.getSession().getAttribute("detalledeAlumno"); %>
 			<div class="col-4">
 				<div class="list-group" id="list-tab" role="tablist">
-				
-	<%for(int i = 0; i< alumno.size();i++){
-		String cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"alumno-"+i+"\">";
+	<%
+	String cadena = "";
+	if(alumno == null){
+	cadena = "<p>No hay alumnos</p>";
+	}else{
+	for(int i = 0; i< alumno.size();i++){
+		cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"alumno-"+i+"\">";
 		cadena = cadena + alumno.get(i).getAlumno();
 		cadena = cadena + "</a>";
-
+	}
 		out.println(cadena);
 		} %>
 				</div>
@@ -76,11 +81,17 @@
 			<div class="col-8">
 			
 						<%
+						
+						String nombreAlumno = "";
+						if(detallealumno == null){
+						nombreAlumno = "<p>No hay detalles de alumno</p>";
+						}else{
 						for(int i = 0; i< detallealumno.size();i++){
 							
-							String nombreAlumno = "<h4 id=\"alumno-"+i+"-detalle\" class=\"d-none panel-derecha\" >";
+							nombreAlumno = "<h4 id=\"alumno-"+i+"-detalle\" class=\"d-none panel-derecha\" >";
 							nombreAlumno  = nombreAlumno + detallealumno.get(i).getNombre() + " " + detallealumno.get(i).getApellidos()+ "( " +  detallealumno.get(i).getDni() + " )";
 							nombreAlumno = nombreAlumno +"</h4>";
+						}
 							out.println(nombreAlumno);
 						}
 						%>
