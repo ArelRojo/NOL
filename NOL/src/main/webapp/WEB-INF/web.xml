@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>NOL</display-name>
   <welcome-file-list>
-    <welcome-file>principal2.html</welcome-file>
+    <welcome-file>principal.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
@@ -73,17 +73,18 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>rolalu</role-name>
+      <role-name>rolpro</role-name>
     </auth-constraint>
   </security-constraint>
   <security-role>
     <description>
       The role that is required to access the application
     </description>
-    <role-name>rolalu</role-name>
+    <role-name>rolpro</role-name>
   </security-role>
   <login-config>
     <auth-method>BASIC</auth-method>
-    <realm-name>SecuredApp</realm-name>
+    <realm-name>Protegido</realm-name>
   </login-config>
   <servlet>
     <description></description>
@@ -93,6 +94,16 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>AuthenticationProfesor</servlet-name>
-    <url-pattern>/AuthenticationProfesor</url-pattern>
+    <url-pattern>/jsp/AuthenticationProfesor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AsignaturaAlumnos</display-name>
+    <servlet-name>AsignaturaAlumnos</servlet-name>
+    <servlet-class>servlet.AsignaturaAlumnos</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AsignaturaAlumnos</servlet-name>
+    <url-pattern>/AsignaturaAlumnos</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,3 +1,9 @@
+<%@ page session="true"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.List"%>
+<%@ page import="modelo.AlumnoNota"%>
+<%@ page import="modelo.Alumno"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,18 +57,33 @@
 		<main role="main" class="container">
 			<h4 class="text-center"> Alumnos de la asignatura</h4>
 			<div class="row">
+			
+			<%List<AlumnoNota> alumno = (List<AlumnoNota>)request.getSession().getAttribute("alumnonota"); %>
+			<% List<Alumno> detallealumno= (List<Alumno>)request.getSession().getAttribute("detalledeAlumno"); %>
 			<div class="col-4">
 				<div class="list-group" id="list-tab" role="tablist">
-	
-					<a class="list-group-item list-group-item-action" data-toggle="list" role= "tab" aria-controls="home">Juan Bartolo</a>
-					<a class="list-group-item list-group-item-action" data-toggle="list" role= "tab" aria-controls="home">Miguel Sanchez</a>
-					<a class="list-group-item list-group-item-action" data-toggle="list" role= "tab" aria-controls="home">Andrés Elorriaga</a>
-					<a class="list-group-item list-group-item-action" data-toggle="list" role= "tab" aria-controls="home">Oscar Jovaní	</a>
+				
+	<%for(int i = 0; i< alumno.size();i++){
+		String cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"alumno-"+i+"\">";
+		cadena = cadena + alumno.get(i).getAlumno();
+		cadena = cadena + "</a>";
+
+		out.println(cadena);
+		} %>
 				</div>
 			</div>
 			
 			<div class="col-8">
-				<h4 class="text-center"> Fernandez Gómez, María (23456387R) </h4>
+			
+						<%
+						for(int i = 0; i< detallealumno.size();i++){
+							
+							String nombreAlumno = "<h4 id=\"alumno-"+i+"-detalle\" class=\"d-none panel-derecha\" >";
+							nombreAlumno  = nombreAlumno + detallealumno.get(i).getNombre() + " " + detallealumno.get(i).getApellidos()+ "( " +  detallealumno.get(i).getDni() + " )";
+							nombreAlumno = nombreAlumno +"</h4>";
+							out.println(nombreAlumno);
+						}
+						%>
 				<img class="imagen" src="img/user.png" alt="An user" id="img">
 				<h6> Matriculad@ en: DCU, DEW </h6>
 				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p>
@@ -77,7 +98,24 @@
 					asignaturas y notas para alumnos y profesores</p>
 			</div>
 
+
 		</footer>
 	</div>
+	
+	<script>
+	$(".boton-izquierda").click(function(){
+		
+		$(".panel-derecha").addClass("d-none")
+		
+		console.log(this.id);
+		var cadena = "#"+this.id +"-detalle";
+		$(cadena).removeClass("d-none");
+		
+		var cadena = "#"+this.id +"-nota";
+		$(cadena).removeClass("d-none");
+		
+	});
+	
+	</script>
 </body>
 </html>

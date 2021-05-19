@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -26,22 +28,20 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import modelo.Alumno;
+import modelo.AlumnoNota;
 import modelo.Asignatura;
-import modelo.DetallesAsignatura;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.StringUtils;
+import modelo.Profesor;
 
 /**
- * Servlet implementation class Authentication
+ * Servlet implementation class AsignaturaAlumnos
  */
-public class Authentication extends HttpServlet {
+public class AsignaturaAlumnos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Authentication() {
+	public AsignaturaAlumnos() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -52,9 +52,10 @@ public class Authentication extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String key ="";
 
 		HttpServletRequest req = (HttpServletRequest) request;
-		String authHeader = req.getHeader("Authorization");
+		String authHeader = (String)request.getSession().getAttribute("authHeader");
 		
 
 		Map<String, String> map = this.parseAuthorizationBasic(authHeader);
@@ -62,69 +63,55 @@ public class Authentication extends HttpServlet {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		String url = "http://localhost:9090/CentroEducativo/login";
-
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.addHeader("Content-Type", "application/json");
 		httpPost.setEntity(
 				new StringEntity("{\"dni\":\"" + map.get("user") + "\",\"password\":\"" + map.get("pass") + "\"}"));
-
-		// "dni": "23456733H",
-		// "password": "123456"
-
 		try {
-
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
-
-				String key = EntityUtils.toString(httpResponse.getEntity());
-				System.out.println(key);
-
-				// Llamar a lista de asignaturas
-				url = new StringBuilder("http://localhost:9090/CentroEducativo/alumnos/").append(map.get("user"))
-						.append("/asignaturas?key=").append(key).toString();
-				HttpGet httpGet = new HttpGet(url);
-				httpResponse = httpClient.execute(httpGet);
-
-				GsonBuilder builder = new GsonBuilder();
-				builder.setPrettyPrinting();
-
-				Gson gson = builder.create();
-				JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
-
-				List<Asignatura> asignaturas = gson.fromJson(reader, new TypeToken<List<Asignatura>>() {
-				}.getType());
-				
-				List<String> acronimos = new ArrayList();
-				for(int i = 0; i<asignaturas.size(); i++) {
-					String acronimo = asignaturas.get(i).getAsignatura();
-					acronimos.add(this.getNombreAsignatura(acronimo, key, httpClient));
-					
-				}
-				request.getSession().setAttribute("acronimos", acronimos);
-				request.getSession().setAttribute("asignaturas", asignaturas);
-				request.getSession().setAttribute("nombreAlumno", this.getNombreUsuario(map.get("user"), key,httpClient));
-				
-
-				System.out.println(asignaturas);
-
-//           String ru = catsList.get(0).getUrl();
-
-				response.sendRedirect("/NOL/asignaturaAlumno.jsp");
-
-			} else {
-				System.out.println(httpResponse.getStatusLine().getStatusCode());
+				key = EntityUtils.toString(httpResponse.getEntity());
 			}
+
+			// TODO Auto-generated method stub
+
+			String acronimo = (String) request.getParameter("acronimo");
+			url = "http://localhost:9090/CentroEducativo/asignaturas/" + acronimo + "/alumnos?key=" + key;
+
+			HttpGet httpGet = new HttpGet(url);
+
+			httpResponse = httpClient.execute(httpGet);
+			GsonBuilder builder = new GsonBuilder();
+			builder.setPrettyPrinting();
+
+			Gson gson = builder.create();
+			JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
+			List<AlumnoNota> listMap = new ArrayList<AlumnoNota>();
+			listMap= gson.fromJson(reader, new TypeToken<List<AlumnoNota>>() {
+			}.getType());
+			
+			List<Alumno> alumnos = new ArrayList<Alumno>();
+			
+			for(AlumnoNota alumnoNota : listMap) {
+				alumnos.add(this.getAlumno(alumnoNota.getAlumno(), key, httpClient));
+			}
+			
+			request.getSession().setAttribute("detalledeAlumno", alumnos);
+			
+			for(AlumnoNota alumnoNota : listMap) {
+				alumnoNota.setAlumno( getNombreUsuario(alumnoNota.getAlumno(),key,httpClient));
+			}
+			
+			request.getSession().setAttribute("alumnonota", listMap);
+
 		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
-
-		} finally {
-			try {
-				httpClient.close();
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
 		}
+
+		response.sendRedirect("/NOL/alumnos.jsp");
+
 	}
 
 	/**
@@ -152,7 +139,7 @@ public class Authentication extends HttpServlet {
 			return null;
 		}
 	}
-
+	
 	private String getNombreUsuario(String dni, String key,CloseableHttpClient httpClient) {
 
 		String url = "http://localhost:9090/CentroEducativo/alumnos/" + dni + "?key=" + key;
@@ -170,7 +157,7 @@ public class Authentication extends HttpServlet {
 				Gson gson = builder.create();
 				JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
 
-				Alumno alumno = gson.fromJson(reader, new TypeToken<Alumno>() {
+				Alumno alumno= gson.fromJson(reader, new TypeToken<Alumno>() {
 				}.getType());
 
 				return alumno.getNombre() + " " + alumno.getApellidos();
@@ -182,8 +169,8 @@ public class Authentication extends HttpServlet {
 		return null;
 	}
 	
-	private String getNombreAsignatura(String acronimo, String key, CloseableHttpClient httpClient) {
-		String url = "http://localhost:9090/CentroEducativo/asignaturas/" + acronimo + "?key=" + key;
+	private Alumno getAlumno(String dni, String key,CloseableHttpClient httpClient) {
+		String url = "http://localhost:9090/CentroEducativo/alumnos/" + dni + "?key=" + key;
 		HttpGet httpGet = new HttpGet(url);
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -198,10 +185,10 @@ public class Authentication extends HttpServlet {
 				Gson gson = builder.create();
 				JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
 
-				DetallesAsignatura asig = gson.fromJson(reader, new TypeToken<DetallesAsignatura>() {
+				Alumno alumno= gson.fromJson(reader, new TypeToken<Alumno>() {
 				}.getType());
 
-				return asig.getNombre();
+				return alumno;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

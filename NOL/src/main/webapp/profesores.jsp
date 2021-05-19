@@ -1,7 +1,7 @@
 <%@ page session="true"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
-<%@ page import="modelo.Asignatura"%>
+<%@ page import="modelo.DetallesAsignatura"%>
 
 <!DOCTYPE html>
 <html>
@@ -56,47 +56,30 @@
 
 		<!-- Inicio main-->
 		<main role="main" class="container" id="main">
-			<h4 class="text-center">Asignaturas del/la alumn@ <%=request.getSession().getAttribute("nombreAlumno")  %></h4>
+			<h4 class="text-center">Asignaturas del/la profesor@ <%=request.getSession().getAttribute("nombreProfesor")  %></h4>
 			<div class="row">
 			<div class="col-4">
-			<div class="list-group" id="list-tab" role="tablist">
 
 
 				<%
 				
-List<Asignatura> asignaturas = ((List<Asignatura>)request.getSession().getAttribute("asignaturas"));
-List<String> acronimos= ((List<String>)request.getSession().getAttribute("acronimos"));
+List<DetallesAsignatura> asignaturas = ((List<DetallesAsignatura>)request.getSession().getAttribute("detallesAsignaturas"));
 
+String cadena = "";
+
+if(asignaturas == null){
+	cadena = "<p>No hay asignaturas</p>";
+}else{
 for(int i = 0; i< asignaturas.size();i++){
-String cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"asignatura-"+i+"\">";
-cadena = cadena + asignaturas.get(i).getAsignatura();
+cadena = "<a href=\"/NOL/AsignaturaAlumnos?acronimo="+asignaturas.get(i).getAcronimo() +"\" class=\"list-group-item list-group-item-action boton-izquierda\"  id=\"asignatura-"+i+"\">";
+cadena = cadena + asignaturas.get(i).getNombre();
 cadena = cadena + "</a>";
-
+}
 out.println(cadena);
 }
 
 %>
 				
-			</div>
-			</div>
-			<div class="col-8">
-				<div  id="nav-tabContent">
-					<div>
-						<%
-						for(int i = 0; i< asignaturas.size();i++){
-							
-							String nombreAsignatura = "<p id=\"asignatura-"+i+"-detalle\" class=\"d-none panel-derecha\" >";
-							nombreAsignatura  = nombreAsignatura + acronimos.get(i);
-							nombreAsignatura = nombreAsignatura +"</p>";
-							out.println(nombreAsignatura);
-							String nota = "<p id=\"asignatura-"+i+"-nota\" class=\"d-none panel-derecha\" >";
-							nota = nota+ asignaturas.get(i).getNota();
-							nota = nota +"</p>";
-							out.println(nota);
-						}
-						%>
-					</div>
-				</div>
 			</div>
 			</div>
 			
@@ -112,20 +95,5 @@ out.println(cadena);
 
 		</footer>
 	</div>
-	<script>
-	$(".boton-izquierda").click(function(){
-		
-		$(".panel-derecha").addClass("d-none")
-		
-		console.log(this.id);
-		var cadena = "#"+this.id +"-detalle";
-		$(cadena).removeClass("d-none");
-		
-		var cadena = "#"+this.id +"-nota";
-		$(cadena).removeClass("d-none");
-		
-	});
-	
-	</script>
 </body>
 </html>

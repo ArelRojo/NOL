@@ -7,6 +7,8 @@ public class DetallesAsignatura {
 	private String cuatrimestre;
 	private String curso;
 	private String nombre;
+	
+	
 	public String getAcronimo() {
 		return acronimo;
 	}
