@@ -71,6 +71,7 @@ public class AuthenticationProfesor extends HttpServlet {
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+
 				if(req.isUserInRole("rolpro")) {
 
 				String key = EntityUtils.toString(httpResponse.getEntity());
@@ -97,8 +98,6 @@ public class AuthenticationProfesor extends HttpServlet {
 				
 
 				System.out.println(asignaturas);
-
-//           String ru = catsList.get(0).getUrl();
 
 				response.sendRedirect("/NOL/profesores.jsp");}
 				else {

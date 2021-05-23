@@ -49,6 +49,9 @@
 				</h2>
 
 			</div>
+			<div class="d-flex align-items-end flex-column mt-auto p-2">
+				<a class="boton-cerrar-sesion" href="" style="float: right;">Cerrar sesión</a>
+			</div>
 		</div>
 		<!-- Fin encabezado -->
 
@@ -64,18 +67,18 @@
 
 				<%
 				
-List<Asignatura> asignaturas = ((List<Asignatura>)request.getSession().getAttribute("asignaturas"));
-List<String> acronimos= ((List<String>)request.getSession().getAttribute("acronimos"));
+			List<Asignatura> asignaturas = ((List<Asignatura>)request.getSession().getAttribute("asignaturas"));
+			List<String> acronimos= ((List<String>)request.getSession().getAttribute("acronimos"));
 
-for(int i = 0; i< asignaturas.size();i++){
-String cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"asignatura-"+i+"\">";
-cadena = cadena + asignaturas.get(i).getAsignatura();
-cadena = cadena + "</a>";
+			for(int i = 0; i< asignaturas.size();i++){
+			String cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"asignatura-"+i+"\">";
+			cadena = cadena + asignaturas.get(i).getAsignatura();
+			cadena = cadena + "</a>";
 
-out.println(cadena);
-}
+			out.println(cadena);
+			}
 
-%>
+			%>
 				
 			</div>
 			</div>
@@ -85,11 +88,11 @@ out.println(cadena);
 						<%
 						for(int i = 0; i< asignaturas.size();i++){
 							
-							String nombreAsignatura = "<p id=\"asignatura-"+i+"-detalle\" class=\"d-none panel-derecha\" >";
+							String nombreAsignatura = "<p id=\"asignatura-"+i+"-detalle\" class=\"d-none panel-derecha\" >Asignatura: ";
 							nombreAsignatura  = nombreAsignatura + acronimos.get(i);
 							nombreAsignatura = nombreAsignatura +"</p>";
 							out.println(nombreAsignatura);
-							String nota = "<p id=\"asignatura-"+i+"-nota\" class=\"d-none panel-derecha\" >";
+							String nota = "<p id=\"asignatura-"+i+"-nota\" class=\"d-none panel-derecha\" > Nota: ";
 							nota = nota+ asignaturas.get(i).getNota();
 							nota = nota +"</p>";
 							out.println(nota);
@@ -103,7 +106,9 @@ out.println(cadena);
 			
 		</main>
 		<!-- Fin main -->
-
+	<div class="d-flex align-items-end-left flex-column mt-auto p-2">
+			<a href="javascript: history.go(-1)">Volver atrás</a>
+			</div>
 		<footer>
 			<div class="row" id="footer">
 				<p> &nbsp; La aplicación NOL se trata de un sistema de consulta de
@@ -126,6 +131,11 @@ out.println(cadena);
 		
 	});
 	
+	
+	$(".boton-cerrar-sesion").click(function(){
+		alert("Para cerrar sesión es necesario reiniciar el navegador!");
+	});
+
 	</script>
 </body>
 </html>

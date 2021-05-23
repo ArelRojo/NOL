@@ -3,6 +3,9 @@
 <%@ page import="java.util.List"%>
 <%@ page import="modelo.AlumnoNota"%>
 <%@ page import="modelo.Alumno"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="modelo.Asignatura"%>
 
 <!DOCTYPE html>
 <html>
@@ -49,20 +52,26 @@
 				</h2>
 
 			</div>
+			<div class="d-flex align-items-end flex-column mt-auto p-2">
+				<a class="boton-cerrar-sesion" href="" style="float: right;">Cerrar sesión</a>
+			</div>
 		</div>
 		<!-- Fin encabezado -->
 
 		<div class="row" id="separador"></div>
 
 		<!-- Inicio main-->
-		<main role="main" class="container">
+		<main role="main" class="container" id="main">
 			<h4 class="text-center"> Alumnos de la asignatura</h4>
 			<div class="row">
 			
-			<%List<AlumnoNota> alumno = (List<AlumnoNota>)request.getSession().getAttribute("alumnonota"); %>
-			<% List<Alumno> detallealumno= (List<Alumno>)request.getSession().getAttribute("detalledeAlumno"); %>
+			<%List<AlumnoNota> alumno = (List<AlumnoNota>)request.getSession().getAttribute("alumnonota"); 
+			 List<Alumno> detallealumno= (List<Alumno>)request.getSession().getAttribute("detalledeAlumno"); 
+			 Map<String,List<Asignatura>> asignaturasDeAlumno = (Map<String,List<Asignatura>>) request.getSession().getAttribute("mapAsignaturas");
+			 %>
 			<div class="col-4">
-				<div class="list-group" id="list-tab" role="tablist">
+		
+			<div class="list-group" id="list-tab" role="tablist">
 	<%
 	String cadena = "";
 	if(alumno == null){
@@ -77,30 +86,81 @@
 		} %>
 				</div>
 			</div>
-			
-			<div class="col-8">
-			
-						<%
+			 
+			 <%
+			 	String div = ""; 
+			 if(alumno == null){
+					div = "<div>";
+					}else{
+					for(int i = 0; i< alumno.size();i++){
+						div = "<div class=\"d-none panel-derecha col-8\" id=\"alumno-"+i+"-detalle\">";
 						
+					}
+						out.println(div);
+						} 
+			 
+						String dni = "";
 						String nombreAlumno = "";
 						if(detallealumno == null){
-						nombreAlumno = "<p>No hay detalles de alumno</p>";
+						nombreAlumno = "<h4>No hay detalles de alumno<h4>";
 						}else{
 						for(int i = 0; i< detallealumno.size();i++){
 							
-							nombreAlumno = "<h4 id=\"alumno-"+i+"-detalle\" class=\"d-none panel-derecha\" >";
+							nombreAlumno = "<h4>";
 							nombreAlumno  = nombreAlumno + detallealumno.get(i).getNombre() + " " + detallealumno.get(i).getApellidos()+ "( " +  detallealumno.get(i).getDni() + " )";
 							nombreAlumno = nombreAlumno +"</h4>";
+							dni = detallealumno.get(i).getDni();
 						}
 							out.println(nombreAlumno);
 						}
+						
+						
 						%>
 				<img class="imagen" src="img/user.png" alt="An user" id="img">
-				<h6> Matriculad@ en: DCU, DEW </h6>
-				<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p>
+				<%
+				
+					String asignaturas_matricula = "";
+					String asignatura ="";
+					List<Asignatura> asig = new ArrayList<Asignatura>();
+				if (asignaturasDeAlumno == null){
+					asignaturas_matricula = "";
+				}else{
+					int i = 0;
+					
+					for(Map.Entry entry : asignaturasDeAlumno.entrySet()){
+						if(!dni.equals("")){
+						if(entry.getKey().equals(dni)){
+							
+							asignaturas_matricula = "<h6> Matriculad@ en:";
+							asig = (List<Asignatura>)entry.getValue();
+							if(asig != null){
+							for(Asignatura a : asig){
+							asignatura = a.getAsignatura();
+							asignaturas_matricula = asignaturas_matricula + " " + asignatura;
+							}
+							asignaturas_matricula = asignaturas_matricula + "</h6>";
+							}
+						}
+						
+						}
+						i++;
+					}
+					out.println(asignaturas_matricula);
+				}
+				
+				%>
+				<!-- <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+				Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+				Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p> -->
 			</div>
-			</div>
+			
 		</main>
+		<div class="d-flex align-items-end-left flex-column mt-auto p-2">
+			<a href="javascript: history.go(-1)">Volver atrás</a>
+			</div>
+			</div>
+			
 		<!-- Fin main -->
 
 		<footer>
@@ -111,7 +171,11 @@
 
 
 		</footer>
-	</div>
+	
+	<%
+	out.println("</div>");
+	%>
+	
 	
 	<script>
 	$(".boton-izquierda").click(function(){
@@ -122,11 +186,14 @@
 		var cadena = "#"+this.id +"-detalle";
 		$(cadena).removeClass("d-none");
 		
-		var cadena = "#"+this.id +"-nota";
-		$(cadena).removeClass("d-none");
 		
 	});
+
 	
+	$(".boton-cerrar-sesion").click(function(){
+		alert("Para cerrar sesión es necesario reiniciar el navegador!");
+	});
+
 	</script>
 </body>
 </html>

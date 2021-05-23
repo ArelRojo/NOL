@@ -76,6 +76,8 @@ public class Authentication extends HttpServlet {
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				
+				if(req.isUserInRole("rolalu")) {
 
 				String key = EntityUtils.toString(httpResponse.getEntity());
 				System.out.println(key);
@@ -108,9 +110,11 @@ public class Authentication extends HttpServlet {
 
 				System.out.println(asignaturas);
 
-//           String ru = catsList.get(0).getUrl();
-
 				response.sendRedirect("/NOL/asignaturaAlumno.jsp");
+				}
+				else {
+					response.sendRedirect("/NOL/NoAutorizado.html");
+				}
 
 			} else {
 				System.out.println(httpResponse.getStatusLine().getStatusCode());
