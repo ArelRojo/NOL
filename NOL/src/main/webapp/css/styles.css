@@ -185,6 +185,14 @@ form .row {
 	color: white;
 }
 
+#footer_al{
+	background-color: #393838;
+	color: white;
+	width: 1140px;
+	align-self: center;
+	margin-left: auto;
+    margin-right: auto;
+}
 #main{
 	height: 500px;
 }

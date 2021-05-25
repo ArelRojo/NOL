@@ -38,6 +38,7 @@ import modelo.Profesor;
  */
 public class AuthenticationProfesor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,6 +52,7 @@ public class AuthenticationProfesor extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		final String RUTA = getServletConfig().getInitParameter("ruta");
 		HttpServletRequest req = (HttpServletRequest) request;
 		String authHeader = req.getHeader("Authorization");
 		request.getSession(true).setAttribute("authHeader", authHeader);
@@ -59,7 +61,7 @@ public class AuthenticationProfesor extends HttpServlet {
 		
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
-		String url = "http://localhost:9090/CentroEducativo/login";
+		String url = RUTA+"/login";
 		
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.addHeader("Content-Type", "application/json");
@@ -79,7 +81,7 @@ public class AuthenticationProfesor extends HttpServlet {
 				System.out.println(key);
 
 				// Llamar a lista de asignaturas
-				url = new StringBuilder("http://localhost:9090/CentroEducativo/profesores/").append(map.get("user"))
+				url = new StringBuilder(RUTA+"/profesores/").append(map.get("user"))
 						.append("/asignaturas?key=").append(key).toString();
 				HttpGet httpGet = new HttpGet(url);
 				httpResponse = httpClient.execute(httpGet);
@@ -146,8 +148,8 @@ public class AuthenticationProfesor extends HttpServlet {
 	}
 	
 	private String getNombreUsuario(String dni, String key,CloseableHttpClient httpClient) {
-
-		String url = "http://localhost:9090/CentroEducativo/profesores/" + dni + "?key=" + key;
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String url = RUTA+"/profesores/" + dni + "?key=" + key;
 		HttpGet httpGet = new HttpGet(url);
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);

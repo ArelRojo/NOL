@@ -52,7 +52,7 @@ public class Authentication extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		final String RUTA = getServletConfig().getInitParameter("ruta");
 		HttpServletRequest req = (HttpServletRequest) request;
 		String authHeader = req.getHeader("Authorization");
 		
@@ -61,7 +61,7 @@ public class Authentication extends HttpServlet {
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
-		String url = "http://localhost:9090/CentroEducativo/login";
+		String url = RUTA+"/login";
 
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.addHeader("Content-Type", "application/json");
@@ -83,7 +83,7 @@ public class Authentication extends HttpServlet {
 				System.out.println(key);
 
 				// Llamar a lista de asignaturas
-				url = new StringBuilder("http://localhost:9090/CentroEducativo/alumnos/").append(map.get("user"))
+				url = new StringBuilder(RUTA+"/alumnos/").append(map.get("user"))
 						.append("/asignaturas?key=").append(key).toString();
 				HttpGet httpGet = new HttpGet(url);
 				httpResponse = httpClient.execute(httpGet);
@@ -159,7 +159,8 @@ public class Authentication extends HttpServlet {
 
 	private String getNombreUsuario(String dni, String key,CloseableHttpClient httpClient) {
 
-		String url = "http://localhost:9090/CentroEducativo/alumnos/" + dni + "?key=" + key;
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String url = RUTA+ "/alumnos/" + dni + "?key=" + key;
 		HttpGet httpGet = new HttpGet(url);
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -187,7 +188,8 @@ public class Authentication extends HttpServlet {
 	}
 	
 	private String getNombreAsignatura(String acronimo, String key, CloseableHttpClient httpClient) {
-		String url = "http://localhost:9090/CentroEducativo/asignaturas/" + acronimo + "?key=" + key;
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String url = RUTA + "/asignaturas/" + acronimo + "?key=" + key;
 		HttpGet httpGet = new HttpGet(url);
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);

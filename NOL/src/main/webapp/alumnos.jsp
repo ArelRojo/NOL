@@ -3,8 +3,8 @@
 <%@ page import="java.util.List"%>
 <%@ page import="modelo.AlumnoNota"%>
 <%@ page import="modelo.Alumno"%>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.HashMap"%>
 <%@ page import="modelo.Asignatura"%>
 
 <!DOCTYPE html>
@@ -17,7 +17,8 @@
 
 <!-- Hoja de estilos CSS -->
 <link rel="stylesheet" href="css/styles.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- IntegraciÃ³n bootstrap -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
@@ -53,7 +54,8 @@
 
 			</div>
 			<div class="d-flex align-items-end flex-column mt-auto p-2">
-				<a class="boton-cerrar-sesion" href="" style="float: right;">Cerrar sesión</a>
+				<a class="boton-cerrar-sesion" href="" style="float: right;">Cerrar
+					sesión</a>
 			</div>
 		</div>
 		<!-- Fin encabezado -->
@@ -62,138 +64,225 @@
 
 		<!-- Inicio main-->
 		<main role="main" class="container" id="main">
-			<h4 class="text-center"> Alumnos de la asignatura</h4>
+			<h4 class="text-center">Alumnos de la asignatura</h4>
 			<div class="row">
-			
-			<%List<AlumnoNota> alumno = (List<AlumnoNota>)request.getSession().getAttribute("alumnonota"); 
-			 List<Alumno> detallealumno= (List<Alumno>)request.getSession().getAttribute("detalledeAlumno"); 
-			 Map<String,List<Asignatura>> asignaturasDeAlumno = (Map<String,List<Asignatura>>) request.getSession().getAttribute("mapAsignaturas");
-			 %>
-			<div class="col-4">
-		
-			<div class="list-group" id="list-tab" role="tablist">
-	<%
-	String cadena = "";
-	if(alumno == null){
-	cadena = "<p>No hay alumnos</p>";
-	}else{
-	for(int i = 0; i< alumno.size();i++){
-		cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"alumno-"+i+"\">";
-		cadena = cadena + alumno.get(i).getAlumno();
-		cadena = cadena + "</a>";
-	}
-		out.println(cadena);
-		} %>
-				</div>
-			</div>
-			 
-			 <%
-			 	String div = ""; 
-			 if(alumno == null){
-					div = "<div>";
-					}else{
-					for(int i = 0; i< alumno.size();i++){
-						div = "<div class=\"d-none panel-derecha col-8\" id=\"alumno-"+i+"-detalle\">";
-						
-					}
-						out.println(div);
-						} 
-			 
-						String dni = "";
-						String nombreAlumno = "";
-						if(detallealumno == null){
-						nombreAlumno = "<h4>No hay detalles de alumno<h4>";
-						}else{
-						for(int i = 0; i< detallealumno.size();i++){
-							
-							nombreAlumno = "<h4>";
-							nombreAlumno  = nombreAlumno + detallealumno.get(i).getNombre() + " " + detallealumno.get(i).getApellidos()+ "( " +  detallealumno.get(i).getDni() + " )";
-							nombreAlumno = nombreAlumno +"</h4>";
-							dni = detallealumno.get(i).getDni();
+
+				<%
+				List<AlumnoNota> alumno = (List<AlumnoNota>) request.getSession().getAttribute("alumnonota");
+				List<Alumno> detallealumno = (List<Alumno>) request.getSession().getAttribute("detalledeAlumno");
+				Map<String, List<Asignatura>> asignaturasDeAlumno = (Map<String, List<Asignatura>>) request.getSession()
+						.getAttribute("mapAsignaturas");
+				%>
+				<div class="col-4">
+
+					<div class="list-group" id="list-tab" role="tablist">
+						<%
+						String cadena = "";
+						if (alumno == null) {
+							cadena = "<p>No hay alumnos</p>";
+						} else {
+							for (int i = 0; i < alumno.size(); i++) {
+								cadena = "<a class=\"list-group-item list-group-item-action boton-izquierda\" data-toggle=\"list\" role=\"tab\" aria-controls=\"home\" id=\"alumno-"
+								+ i + "\">";
+								cadena = cadena + alumno.get(i).getAlumno();
+								cadena = cadena + "</a>";
+							}
+							out.println(cadena);
 						}
-							out.println(nombreAlumno);
-						}
-						
-						
 						%>
+					</div>
+				</div>
+
+				<%
+				String div = "";
+				if (alumno == null) {
+					div = "<div>";
+				} else {
+					for (int i = 0; i < alumno.size(); i++) {
+						div = "<div class=\"d-none panel-derecha col-8\" id=\"alumno-" + i + "-detalle\">";
+
+					}
+					out.println(div);
+				}
+
+				String dni = "";
+				String nombreAlumno = "";
+				if (detallealumno == null) {
+					nombreAlumno = "<h4>No hay detalles de alumno<h4>";
+				} else {
+					for (int i = 0; i < detallealumno.size(); i++) {
+
+						nombreAlumno = "<h4>";
+						nombreAlumno = nombreAlumno + detallealumno.get(i).getNombre() + " " + detallealumno.get(i).getApellidos()
+						+ "( " + detallealumno.get(i).getDni() + " )";
+						nombreAlumno = nombreAlumno + "</h4>";
+						dni = detallealumno.get(i).getDni();
+					}
+					out.println(nombreAlumno);
+				}
+				%>
 				<img class="imagen" src="img/user.png" alt="An user" id="img">
 				<%
-				
-					String asignaturas_matricula = "";
-					String asignatura ="";
-					List<Asignatura> asig = new ArrayList<Asignatura>();
-				if (asignaturasDeAlumno == null){
+				String asignaturas_matricula = "";
+				String asignatura = "";
+				List<Asignatura> asig = new ArrayList<Asignatura>();
+				if (asignaturasDeAlumno == null) {
 					asignaturas_matricula = "";
-				}else{
-					int i = 0;
-					
-					for(Map.Entry entry : asignaturasDeAlumno.entrySet()){
-						if(!dni.equals("")){
-						if(entry.getKey().equals(dni)){
-							
-							asignaturas_matricula = "<h6> Matriculad@ en:";
-							asig = (List<Asignatura>)entry.getValue();
-							if(asig != null){
-							for(Asignatura a : asig){
-							asignatura = a.getAsignatura();
-							asignaturas_matricula = asignaturas_matricula + " " + asignatura;
+				} else {
+					for (Map.Entry entry : asignaturasDeAlumno.entrySet()) {
+						if (!dni.equals("")) {
+					if (entry.getKey().equals(dni)) {
+
+						asignaturas_matricula = "<h6> Matriculad@ en:";
+						asig = (List<Asignatura>) entry.getValue();
+						if (asig != null) {
+							for (Asignatura a : asig) {
+								asignatura = a.getAsignatura();
+								asignaturas_matricula = asignaturas_matricula + " " + asignatura;
 							}
 							asignaturas_matricula = asignaturas_matricula + "</h6>";
-							}
 						}
-						
+					}
+
 						}
-						i++;
+
+					}
+					String nota = "";
+					String label_nota="";
+					if (alumno == null) {
+						nota = "<p>No hay alumnos</p>";
+					} else {
+						for (int i = 0; i < alumno.size(); i++) {
+							label_nota= "<label for=\"nota\" >Nota asignatura: </label>";
+					nota = "<input type=\"text\" name=\"nota\" class=\"form-control\" style = \"width : 105.5px;\" value=" + alumno.get(i).getNota() + "> ";
+						}
 					}
 					out.println(asignaturas_matricula);
+					out.println(label_nota);
+					out.println(nota);
 				}
-				
 				%>
+				<% 
+							String key = (String) request.getSession().getAttribute("key");
+							String acronimo = (String) request.getSession().getAttribute("acronimo");
+							String url = "http://localhost:9090/CentroEducativo/alumnos/" +dni+ "/asignaturas/" + acronimo + "?key=" + key;
+				%>
+				<input type="text" name="key" class="form-control" value=<%=key%>
+					readonly style="display: none;"> <input type="text"
+					name="dni" class="form-control" value=<%=dni%> readonly
+					style="display: none;"> <label for="asignatura">Asignatura:
+				</label><input type="text" name="acronimo" class="form-control"
+					value=<%=acronimo%> readonly style="width: 200px;">
+				<button class="btn btn-primary" id="Save"
+					style="margin-top: 5px; margin-left: 150px;">Guardar</button>
+
+
+				<!-- 				<button type="button" class="btn btn-info btn-lg"
+					data-toggle="modal" data-target="#myModal">Editar</button>
+
+				<div id="myModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+
+						
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Editar Nota</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div id="div_form" class="modal-body">
+							
+								<div class="form-group" style="display: none;">
+									<label for="asignatura">Clave: </label>
+									<input type="text" name="key" class="form-control" value=<%=key%> readonly style="display: none;">
+								</div>
+								<div class="form-group">
+									<label for="asignatura">Alumn@: </label>
+									<input type="text" name="dni" class="form-control" value=<%=dni%> readonly style="display: none;">
+								</div>
+								<div class="form-group">
+									<label for="asignatura">Asignatura: </label>
+									<input type="text" name="acronimo" class="form-control" value=<%=acronimo%> readonly style="display: none;">
+								</div>
+								<div class="form-group">
+								<label for="nota">Nota: </label>
+									<input type="text" name = "nota" class="form-control">
+								</div>
+								<div class="modal-footer">
+								<input type="button" id="save" value="Save Data" />
+								</div>
+							
+							
+						</div>
+
+					</div>
+				</div>
 				<!-- <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 				Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
 				Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p> -->
 			</div>
-			
+			<div id="msg"></div>
 		</main>
 		<div class="d-flex align-items-end-left flex-column mt-auto p-2">
 			<a href="javascript: history.go(-1)">Volver atrás</a>
-			</div>
-			</div>
-			
-		<!-- Fin main -->
+		</div>
+	</div>
 
-		<footer>
-			<div class="row" id="footer">
-				<p> &nbsp; La aplicaciÃ³n NOL se trata de un sistema de consulta de
-					asignaturas y notas para alumnos y profesores</p>
-			</div>
+	<!-- Fin main -->
+
+	<footer>
+		<div class="row mt-auto p-2" id="footer_al">
+			<p>&nbsp; La aplicaciÃ³n NOL se trata de un sistema de consulta
+				de asignaturas y notas para alumnos y profesores</p>
+		</div>
 
 
-		</footer>
-	
+	</footer>
+
 	<%
 	out.println("</div>");
 	%>
-	
-	
+
+
 	<script>
-	$(".boton-izquierda").click(function(){
-		
-		$(".panel-derecha").addClass("d-none")
-		
-		console.log(this.id);
-		var cadena = "#"+this.id +"-detalle";
-		$(cadena).removeClass("d-none");
-		
-		
-	});
+		$(".boton-izquierda").click(function() {
 
-	
-	$(".boton-cerrar-sesion").click(function(){
-		alert("Para cerrar sesión es necesario reiniciar el navegador!");
-	});
+			$(".panel-derecha").addClass("d-none")
 
+			console.log(this.id);
+			var cadena = "#" + this.id + "-detalle";
+			$(cadena).removeClass("d-none");
+
+		});
+
+		$(".boton-cerrar-sesion").click(function() {
+			alert("Para cerrar sesión es necesario reiniciar el navegador!");
+		});
+
+		$(document).ready(function() {
+							var $doc = $(this);
+							$("#Save").click(function(e) {
+												e.preventDefault();
+												var nota = $doc.find('input[name="nota"]').val();
+												var dni = $doc.find('input[name="dni"]').val();
+												var acronimo = $doc.find('input[name="acronimo"]').val();
+												var url = "/NOL/AsignaturaAlumnos/" + nota + "/" + dni + "/" + acronimo;
+
+												$ .ajax({
+															url : url,
+															type : 'PUT',
+															success : function( data, status, xhr) {
+																window.location .replace("http://localhost:8080/NOL/alumno.jsp");
+															},
+															error : function( xhr, status, error) {
+																$('#msg') .html('<span style=\'color:red;\'>'
+																						+ error
+																						+ '</span>')
+															}
+														});
+
+											});
+						});
 	</script>
 </body>
 </html>

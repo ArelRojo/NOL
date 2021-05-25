@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.apache.commons.codec.binary.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -53,8 +55,8 @@ public class AsignaturaAlumnos extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String key ="";
+		final String RUTA = getServletConfig().getInitParameter("ruta");
 
-		HttpServletRequest req = (HttpServletRequest) request;
 		String authHeader = (String)request.getSession().getAttribute("authHeader");
 		
 
@@ -62,7 +64,7 @@ public class AsignaturaAlumnos extends HttpServlet {
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
-		String url = "http://localhost:9090/CentroEducativo/login";
+		String url = RUTA + "/login";
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.addHeader("Content-Type", "application/json");
 		httpPost.setEntity(
@@ -76,7 +78,7 @@ public class AsignaturaAlumnos extends HttpServlet {
 			// TODO Auto-generated method stub
 
 			String acronimo = (String) request.getParameter("acronimo");
-			url = "http://localhost:9090/CentroEducativo/asignaturas/" + acronimo + "/alumnos?key=" + key;
+			url = RUTA + "/asignaturas/" + acronimo + "/alumnos?key=" + key;
 
 			HttpGet httpGet = new HttpGet(url);
 
@@ -106,13 +108,14 @@ public class AsignaturaAlumnos extends HttpServlet {
 			request.getSession().setAttribute("mapAsignaturas", asignaturasDeAlumno);
 			request.getSession().setAttribute("detalledeAlumno", alumnos);
 			
+			request.getSession().setAttribute("acronimo", acronimo);
+			request.getSession().setAttribute("key", key);
 			for(AlumnoNota alumnoNota : listMap) {
 				alumnoNota.setAlumno( getNombreUsuario(alumnoNota.getAlumno(),key,httpClient));
 			}
 			
 			request.getSession().setAttribute("alumnonota", listMap);
-
-		
+			response.setHeader("Allow", "OPTIONS, GET, HEAD, POST, PUT, DELETE");
 		response.sendRedirect("/NOL/alumnos.jsp");
 	
 			} else {
@@ -127,6 +130,61 @@ public class AsignaturaAlumnos extends HttpServlet {
 		}
 
 	
+
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String key = "";
+		String pathInfo = req.getPathInfo();
+		if (pathInfo.startsWith("/")) {
+            pathInfo = pathInfo.substring(1);
+        }
+		String[] partes = pathInfo.split("/");
+		String nota = partes[0];
+		String dni = partes[1];
+		String acronimo = partes[2];
+ 		
+		HttpServletRequest request = (HttpServletRequest) req;
+		String authHeader = (String)req.getSession().getAttribute("authHeader");
+		
+		Map<String, String> map = this.parseAuthorizationBasic(authHeader);
+
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+
+		String url = RUTA + "/login";
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.addHeader("Content-Type", "application/json");
+		httpPost.setEntity(
+				new StringEntity("{\"dni\":\"" + map.get("user") + "\",\"password\":\"" + map.get("pass") + "\"}"));
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				key = EntityUtils.toString(httpResponse.getEntity());
+				
+				String url_put = RUTA + "/alumnos/" +dni+ "/asignaturas/" +acronimo+ "?key=" +key;
+				
+				HttpPut httpPut = new HttpPut(url_put);
+
+				httpPut.addHeader("Content-Type", "application/json");
+				httpPut.setEntity(new StringEntity(nota));
+				HttpResponse res = httpClient.execute(httpPut);
+				if(res.getStatusLine().getStatusCode() == 200) {
+					resp.sendRedirect("/NOL/alumnos.jsp");
+				}else {
+					resp.sendError(res.getStatusLine().getStatusCode());
+				}
+				
+			}else {
+				System.out.println(httpResponse.getStatusLine().getStatusCode());
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -153,10 +211,10 @@ public class AsignaturaAlumnos extends HttpServlet {
 			return null;
 		}
 	}
-	
-	private String getNombreUsuario(String dni, String key,CloseableHttpClient httpClient) {
 
-		String url = "http://localhost:9090/CentroEducativo/alumnos/" + dni + "?key=" + key;
+	private String getNombreUsuario(String dni, String key,CloseableHttpClient httpClient) {
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String url = RUTA + "/alumnos/" + dni + "?key=" + key;
 		HttpGet httpGet = new HttpGet(url);
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -181,7 +239,8 @@ public class AsignaturaAlumnos extends HttpServlet {
 	}
 	
 	private Alumno getAlumno(String dni, String key,CloseableHttpClient httpClient) {
-		String url = "http://localhost:9090/CentroEducativo/alumnos/" + dni + "?key=" + key;
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String url = RUTA + "/alumnos/" + dni + "?key=" + key;
 		HttpGet httpGet = new HttpGet(url);
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -209,7 +268,8 @@ public class AsignaturaAlumnos extends HttpServlet {
 	}
 	
 	private List<Asignatura> getAsignaturaDeAlumno(String dni, String key, CloseableHttpClient httpClient) {
-		String url= "http://localhost:9090/CentroEducativo/alumnos/" + dni + "/asignaturas" + "?key=" + key;
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String url= RUTA + "/alumnos/" + dni + "/asignaturas" + "?key=" + key;
 		HttpGet httpGet = new HttpGet(url);
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
