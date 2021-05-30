@@ -144,4 +144,32 @@
     <servlet-name>Authentication</servlet-name>
     <servlet-name>AuthenticationProfesor</servlet-name>
   </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DatosExpediente</display-name>
+    <servlet-name>DatosExpediente</servlet-name>
+    <servlet-class>servlet.DatosExpediente</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DatosExpediente</servlet-name>
+    <url-pattern>/DatosExpediente</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ExpedienteAlumno</display-name>
+    <servlet-name>ExpedienteAlumno</servlet-name>
+    <servlet-class>servlet.ExpedienteAlumno</servlet-class>
+        <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExpedienteAlumno</servlet-name>
+    <url-pattern>/ExpedienteAlumno</url-pattern>
+  </servlet-mapping>
 </web-app>

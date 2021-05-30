@@ -60,6 +60,9 @@
 		<!-- Inicio main-->
 		<main role="main" class="container" id="main">
 			<h4 class="text-center">Asignaturas del/la alumn@ <%=request.getSession().getAttribute("nombreAlumno")  %></h4>
+			<div class="d-flex align-items-end flex-column mt-auto p-2">
+				<a class="btn btn-outline-primary" href="/NOL/ExpedienteAlumno" role="button">Abrir Expediente</a>
+			</div>
 			<div class="row">
 			<div class="col-4">
 			<div class="list-group" id="list-tab" role="tablist">

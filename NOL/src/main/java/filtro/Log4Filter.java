@@ -53,11 +53,10 @@ public class Log4Filter implements Filter {
 	PrintWriter log = new PrintWriter( new FileWriter(fileName, true));
 	
 	log.println(strlog);
-	
-	log.flush();
+
 	chain.doFilter(request, response);
-	 
-	 
+	
+	log.close();	 
 	}
 
 	/**

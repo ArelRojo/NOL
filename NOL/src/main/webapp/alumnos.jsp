@@ -65,6 +65,9 @@
 		<!-- Inicio main-->
 		<main role="main" class="container" id="main">
 			<h4 class="text-center">Alumnos de la asignatura</h4>
+			<div class="d-flex align-items-end flex-column mt-auto p-2">
+				<button onClick="window.print();">Imprimir</button>
+			</div>
 			<div class="row">
 
 				<%

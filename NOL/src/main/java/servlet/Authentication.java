@@ -55,7 +55,7 @@ public class Authentication extends HttpServlet {
 		final String RUTA = getServletConfig().getInitParameter("ruta");
 		HttpServletRequest req = (HttpServletRequest) request;
 		String authHeader = req.getHeader("Authorization");
-		
+		request.getSession(true).setAttribute("authHeader", authHeader);
 
 		Map<String, String> map = this.parseAuthorizationBasic(authHeader);
 
@@ -166,9 +166,6 @@ public class Authentication extends HttpServlet {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 
-//				String json = EntityUtils.toString(httpResponse.getEntity());
-//				System.out.println(json);
-
 				GsonBuilder builder = new GsonBuilder();
 				builder.setPrettyPrinting();
 
@@ -194,9 +191,6 @@ public class Authentication extends HttpServlet {
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
-
-//				String json = EntityUtils.toString(httpResponse.getEntity());
-//				System.out.println(json);
 
 				GsonBuilder builder = new GsonBuilder();
 				builder.setPrettyPrinting();
