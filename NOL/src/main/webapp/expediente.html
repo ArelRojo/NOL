@@ -40,17 +40,13 @@
 			<div class="rounded float-right">
 				<img class="image" src="img/user.png" alt="An user" id="img">
 			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Maecenas sed diam eget risus varius blandit sit amet non magna.
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-				commodo cursus magna, vel scelerisque nisl consectetur et. Cras
-				mattis consectetur purus sit amet fermentum. Duis mollis, est non
-				commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem
-				nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+			<p><b>DEW - Centro Educativo</b> certifica que D/Dª <b><span id="nombreAlumno"></span></b>, con DNI <span id="dni"></span>, matriculado/a en el curso 
+			2020/21, ha obtenido las calificaciones que se muestran en la siguiente tabla.</p>
 
 		</div>
-		<br> <br>
-		<div>
+
+		<div class="table-div">
+		
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
@@ -59,8 +55,8 @@
 						<th scope="col">Calificación</th>
 					</tr>
 				</thead>
-				<tbody id="body">
-					<tr>
+				<tbody id="tbody">
+					<!-- <!-- <tr>
 						<th scope="row">1</th>
 						<td id="">Otto</td>
 						<td>@mdo</td>
@@ -74,7 +70,7 @@
 						<th scope="row">3</th>
 						<td>the Bird</td>
 						<td>@twitter</td>
-					</tr>
+					</tr> --> 
 				</tbody>
 			</table>
 		</div>
@@ -98,6 +94,7 @@
 	</footer>
 	<script type="text/javascript">
 	$(document).ready(function(){
+		var receivedData = [];
 		$.ajax({
 			url: "/NOL/DatosExpediente",
 			dataType: 'json',
@@ -105,7 +102,7 @@
 				alert("Error Ocurred");
 			},
 			success: function(data){
-				var receivedData = [];
+				receivedData = [];
 				$.each(data.jsonArray, function(index){
 					$.each(data.jsonArray[index], function(key, value){
 						var point = [];
@@ -113,13 +110,42 @@
 						point.push(key);
 						point.push(value);
 						receivedData.push(point);
+						
+					
+						
+						
 					});
 				});
+				var body = document.getElementById("tbody");
+				
+				//Recorer el array
+				var acronimos = receivedData[0];
+				var nombresAsignaturas = receivedData[1];
+				var notas = receivedData[2];
+				for(i = 0; i< acronimos.length; i++){
+					
+					var row = body.insertRow(0);
+					var cell1 = row.insertCell(0);
+					cell1.innerHTML= acronimos[1][i];
+					var cell2 = row.insertCell(1);
+					cell2.innerHTML=nombresAsignaturas[1][i];
+					var cell3 = row.insertCell(2);
+					cell3.innerHTML = notas[1][i];
+					
+				}
+				var nombreAlumno = receivedData[3];
+				var dni = receivedData[4];
+				
+				var span1 = document.getElementById("nombreAlumno");
+				span1.innerHTML = nombreAlumno[1];
+				var span2 = document.getElementById("dni");
+				span2.innerHTML = dni[1];
+				
 			}
 			
 		});
 		
-
+		
 	});
 	</script>
 </body>

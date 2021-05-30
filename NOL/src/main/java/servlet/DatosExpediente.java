@@ -58,7 +58,7 @@ public class DatosExpediente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String key ="";
 		final String RUTA = getServletConfig().getInitParameter("ruta");
-	String authHeader = (String)request.getSession().getAttribute("authHeader");
+		String authHeader = (String)request.getSession().getAttribute("authHeader");
 		String user = this.parseAuthorizationBasic(authHeader);
 		Map<String, String> map = new HashMap<String,String>();
 		map.put("93847525G", "123456");
@@ -127,10 +127,10 @@ public class DatosExpediente extends HttpServlet {
 				datos.add("notas", JsonParser.parseString(gson.toJson(notas)));
 				List<String> nombreAlumno = new ArrayList<String>();
 				nombreAlumno.add(this.getNombreUsuario(dni, key,httpClient));
-				datos.add("nombreAlumno", JsonParser.parseString(gson.toJson(nombreAlumno)));
+				datos.add("nombreAlumno", JsonParser.parseString(gson.toJson(this.getNombreUsuario(dni, key,httpClient))));
 				List<String> dniAlumno = new ArrayList<String>();
 				dniAlumno.add(dni);
-				datos.add("dni", JsonParser.parseString(gson.toJson(dniAlumno)));
+				datos.add("dni", JsonParser.parseString(gson.toJson(dni)));
 				
 				array.add(datos);
 				json.add("jsonArray", array);
@@ -187,6 +187,32 @@ public class DatosExpediente extends HttpServlet {
 				}.getType());
 
 				return asig.getNombre();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+	
+	private String getCursoAsignatura(String acronimo, String key, CloseableHttpClient httpClient) {
+		final String RUTA = getServletConfig().getInitParameter("ruta");
+		String url = RUTA + "/asignaturas/" + acronimo + "?key=" + key;
+		HttpGet httpGet = new HttpGet(url);
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpGet);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+
+				GsonBuilder builder = new GsonBuilder();
+				builder.setPrettyPrinting();
+
+				Gson gson = builder.create();
+				JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
+
+				DetallesAsignatura asig = gson.fromJson(reader, new TypeToken<DetallesAsignatura>() {
+				}.getType());
+
+				return asig.getCurso();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

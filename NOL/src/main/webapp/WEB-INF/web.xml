@@ -86,6 +86,12 @@
     </description>
     <role-name>rolpro</role-name>
   </security-role>
+   <security-role>
+    <description>
+      The role that is required to access the application
+    </description>
+    <role-name>rolalu</role-name>
+  </security-role>
   <login-config>
     <auth-method>BASIC</auth-method>
     <realm-name>Protegido</realm-name>
@@ -143,6 +149,8 @@
     <servlet-name>AsignaturaAlumnos</servlet-name>
     <servlet-name>Authentication</servlet-name>
     <servlet-name>AuthenticationProfesor</servlet-name>
+    <servlet-name>DatosExpediente</servlet-name>
+    <servlet-name>ExpedienteAlumno</servlet-name>
   </filter-mapping>
   <servlet>
     <description></description>

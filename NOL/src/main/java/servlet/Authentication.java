@@ -94,7 +94,7 @@ public class Authentication extends HttpServlet {
 				Gson gson = builder.create();
 				JsonReader reader = new JsonReader(new StringReader(EntityUtils.toString(httpResponse.getEntity())));
 
-				List<Asignatura> asignaturas = gson.fromJson(reader, new TypeToken<List<Asignatura>>() {
+				List<Asignatura> asignaturas = gson.fromJson(reader, new TypeToken<List<Asignatura>>() { 
 				}.getType());
 				
 				List<String> acronimos = new ArrayList();
