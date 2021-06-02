@@ -161,7 +161,7 @@ form .row {
 
 #img {
 	width: 130px;
-	float:left;
+	float:right;
 	margin-right: 20px;
 }
 
@@ -219,4 +219,13 @@ form .row {
 }
 .table-div{
 	margin-top: 100px;
+}
+a{
+	text-align:center;
+}
+#jumbo{
+	margin-top: 100px !important;
+}
+#nombreAlumno1{
+	color: white;
 }

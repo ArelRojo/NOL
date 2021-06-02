@@ -9,71 +9,11 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>Log0</display-name>
-    <servlet-name>Log0</servlet-name>
-    <servlet-class>servlet.Log0</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Log0</servlet-name>
-    <url-pattern>/Log0Post</url-pattern>
-    <url-pattern>/Log0Get</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>Log1</display-name>
-    <servlet-name>Log1</servlet-name>
-    <servlet-class>servlet.Log1</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Log1</servlet-name>
-    <url-pattern>/Log1Post</url-pattern>
-    <url-pattern>/Log1Get</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>Log2</display-name>
-    <servlet-name>Log2</servlet-name>
-    <servlet-class>servlet.Log2</servlet-class>
-    <init-param>
-      <param-name>logFile</param-name>
-      <param-value>/home/user/Escritorio/log2</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Log2</servlet-name>
-    <url-pattern>/Log2Post</url-pattern>
-    <url-pattern>/Log2Get</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>CatApi</display-name>
-    <servlet-name>CatApi</servlet-name>
-    <servlet-class>servlet.CatApi</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CatApi</servlet-name>
-    <url-pattern>/CatApi</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>Authentication</display-name>
-    <servlet-name>Authentication</servlet-name>
-    <servlet-class>servlet.Authentication</servlet-class>
-    <init-param>
-      <param-name>ruta</param-name>
-      <param-value>http://localhost:9090/CentroEducativo</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Authentication</servlet-name>
-    <url-pattern>/jsp/Authentication</url-pattern>
-  </servlet-mapping>
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>ApplicationContent</web-resource-name>
-      <url-pattern>/jsp/*</url-pattern>
+      <url-pattern>/alumno/*</url-pattern>
+      <url-pattern>/profesor/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>rolalu</role-name>
@@ -86,7 +26,7 @@
     </description>
     <role-name>rolpro</role-name>
   </security-role>
-   <security-role>
+  <security-role>
     <description>
       The role that is required to access the application
     </description>
@@ -96,45 +36,6 @@
     <auth-method>BASIC</auth-method>
     <realm-name>Protegido</realm-name>
   </login-config>
-  <servlet>
-    <description></description>
-    <display-name>AuthenticationProfesor</display-name>
-    <servlet-name>AuthenticationProfesor</servlet-name>
-    <servlet-class>servlet.AuthenticationProfesor</servlet-class>
-    <init-param>
-      <param-name>ruta</param-name>
-      <param-value>http://localhost:9090/CentroEducativo</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AuthenticationProfesor</servlet-name>
-    <url-pattern>/jsp/AuthenticationProfesor</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AsignaturaAlumnos</display-name>
-    <servlet-name>AsignaturaAlumnos</servlet-name>
-    <servlet-class>servlet.AsignaturaAlumnos</servlet-class>
-    <init-param>
-      <param-name>ruta</param-name>
-      <param-value>http://localhost:9090/CentroEducativo</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AsignaturaAlumnos</servlet-name>
-    <url-pattern>/AsignaturaAlumnos</url-pattern>
-    <url-pattern>/AsignaturaAlumnos/*</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>Nota</display-name>
-    <servlet-name>Nota</servlet-name>
-    <servlet-class>servlet.Nota</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Nota</servlet-name>
-    <url-pattern>/Nota</url-pattern>
-  </servlet-mapping>
   <filter>
     <display-name>Log4Filter</display-name>
     <filter-name>Log4Filter</filter-name>
@@ -146,11 +47,19 @@
   </filter>
   <filter-mapping>
     <filter-name>Log4Filter</filter-name>
-    <servlet-name>AsignaturaAlumnos</servlet-name>
-    <servlet-name>Authentication</servlet-name>
-    <servlet-name>AuthenticationProfesor</servlet-name>
+    <servlet-name>VistaAsignaturasAlumno</servlet-name>
+    <servlet-name>DatosAsignaturasAlumno</servlet-name>
     <servlet-name>DatosExpediente</servlet-name>
-    <servlet-name>ExpedienteAlumno</servlet-name>
+    <servlet-name>VistaExpediente</servlet-name>
+    <servlet-name>VistaDetalleAsignaturaAlumno</servlet-name>
+    <servlet-name>DatosDetallesAsignaturaAlumno</servlet-name>
+    <servlet-name>VistaListaAsignaturasProfesor</servlet-name>
+    <servlet-name>DatosListaAsignaturasProfesor</servlet-name>
+    <servlet-name>VistaListaAlumnosAsignaturaProfesor</servlet-name>
+    <servlet-name>DatosListaAlumnosAsignaturaProfesor</servlet-name>
+    <servlet-name>VistaDetallesAsignaturaAlumnosProfesor</servlet-name>
+    <servlet-name>DatosDetallesAsignaturaAlumnosProfesor</servlet-name>
+    <servlet-name>CambiarNotaAlumno</servlet-name>
   </filter-mapping>
   <servlet>
     <description></description>
@@ -164,20 +73,166 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>DatosExpediente</servlet-name>
-    <url-pattern>/DatosExpediente</url-pattern>
+    <url-pattern>/alumno/DatosExpediente</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ExpedienteAlumno</display-name>
-    <servlet-name>ExpedienteAlumno</servlet-name>
-    <servlet-class>servlet.ExpedienteAlumno</servlet-class>
+    <display-name>VistaExpediente</display-name>
+    <servlet-name>VistaExpediente</servlet-name>
+    <servlet-class>servlet.VistaExpediente</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VistaExpediente</servlet-name>
+    <url-pattern>/alumno/VistaExpediente</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VistaAsignaturasAlumno</display-name>
+    <servlet-name>VistaAsignaturasAlumno</servlet-name>
+    <servlet-class>servlet.VistaAsignaturasAlumno</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VistaAsignaturasAlumno</servlet-name>
+    <url-pattern>/alumno/VistaAsignaturasAlumno</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DatosAsignaturasAlumno</display-name>
+    <servlet-name>DatosAsignaturasAlumno</servlet-name>
+    <servlet-class>servlet.DatosAsignaturasAlumno</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DatosAsignaturasAlumno</servlet-name>
+    <url-pattern>/alumno/DatosAsignaturasAlumno</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VistaDetalleAsignaturaAlumno</display-name>
+    <servlet-name>VistaDetalleAsignaturaAlumno</servlet-name>
+    <servlet-class>servlet.VistaDetalleAsignaturaAlumno</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VistaDetalleAsignaturaAlumno</servlet-name>
+    <url-pattern>/alumno/VistaDetalleAsignaturaAlumno</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DatosDetallesAsignaturaAlumno</display-name>
+    <servlet-name>DatosDetallesAsignaturaAlumno</servlet-name>
+    <servlet-class>servlet.DatosDetallesAsignaturaAlumno</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DatosDetallesAsignaturaAlumno</servlet-name>
+    <url-pattern>/alumno/DatosDetallesAsignaturaAlumno</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VistaListaAsignaturasProfesor</display-name>
+    <servlet-name>VistaListaAsignaturasProfesor</servlet-name>
+    <servlet-class>servlet.VistaListaAsignaturasProfesor</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VistaListaAsignaturasProfesor</servlet-name>
+    <url-pattern>/profesor/VistaListaAsignaturasProfesor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DatosListaAsignaturasProfesor</display-name>
+    <servlet-name>DatosListaAsignaturasProfesor</servlet-name>
+    <servlet-class>servlet.DatosListaAsignaturasProfesor</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DatosListaAsignaturasProfesor</servlet-name>
+    <url-pattern>/profesor/DatosListaAsignaturasProfesor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VistaListaAlumnosAsignaturaProfesor</display-name>
+    <servlet-name>VistaListaAlumnosAsignaturaProfesor</servlet-name>
+    <servlet-class>servlet.VistaListaAlumnosAsignaturaProfesor</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VistaListaAlumnosAsignaturaProfesor</servlet-name>
+    <url-pattern>/profesor/VistaListaAlumnosAsignaturaProfesor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DatosListaAlumnosAsignaturaProfesor</display-name>
+    <servlet-name>DatosListaAlumnosAsignaturaProfesor</servlet-name>
+    <servlet-class>servlet.DatosListaAlumnosAsignaturaProfesor</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DatosListaAlumnosAsignaturaProfesor</servlet-name>
+    <url-pattern>/profesor/DatosListaAlumnosAsignaturaProfesor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VistaDetallesAsignaturaAlumnosProfesor</display-name>
+    <servlet-name>VistaDetallesAsignaturaAlumnosProfesor</servlet-name>
+    <servlet-class>servlet.VistaDetallesAsignaturaAlumnosProfesor</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VistaDetallesAsignaturaAlumnosProfesor</servlet-name>
+    <url-pattern>/profesor/VistaDetallesAsignaturaAlumnosProfesor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DatosDetallesAsignaturaAlumnosProfesor</display-name>
+    <servlet-name>DatosDetallesAsignaturaAlumnosProfesor</servlet-name>
+    <servlet-class>servlet.DatosDetallesAsignaturaAlumnosProfesor</servlet-class>
+    <init-param>
+      <param-name>ruta</param-name>
+      <param-value>http://localhost:9090/CentroEducativo</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DatosDetallesAsignaturaAlumnosProfesor</servlet-name>
+    <url-pattern>/profesor/DatosDetallesAsignaturaAlumnosProfesor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CambiarNotaAlumno</display-name>
+    <servlet-name>CambiarNotaAlumno</servlet-name>
+    <servlet-class>servlet.CambiarNotaAlumno</servlet-class>
         <init-param>
       <param-name>ruta</param-name>
       <param-value>http://localhost:9090/CentroEducativo</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ExpedienteAlumno</servlet-name>
-    <url-pattern>/ExpedienteAlumno</url-pattern>
+    <servlet-name>CambiarNotaAlumno</servlet-name>
+    <url-pattern>/profesor/CambiarNotaAlumno</url-pattern>
   </servlet-mapping>
 </web-app>

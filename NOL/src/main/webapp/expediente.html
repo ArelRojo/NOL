@@ -96,7 +96,7 @@
 	$(document).ready(function(){
 		var receivedData = [];
 		$.ajax({
-			url: "/NOL/DatosExpediente",
+			url: "/NOL/alumno/DatosExpediente",
 			dataType: 'json',
 			error: function(){
 				alert("Error Ocurred");
@@ -118,7 +118,7 @@
 				});
 				var body = document.getElementById("tbody");
 				
-				//Recorer el array
+				//Recorrer el array
 				var acronimos = receivedData[0];
 				var nombresAsignaturas = receivedData[1];
 				var notas = receivedData[2];
