@@ -26,18 +26,12 @@
 </head>
 <body id="body">
 	<div class="container">
-		<div class="row align-items-start" id="encabezado">
-			<div class="col-sm-4" id="img-wrap">
-				<a href="https://www.upv.es/"> <img src="img/logo3.png" alt="">
-				</a>
-			</div>
-
-			<div class="col-sm-6"></div>
 
 			<div class="d-flex align-items-end flex-column mt-auto p-2">
 				<a class="boton-cerrar-sesion" href="" style="float: right;">Cerrar
 					sesión</a>
-			</div>
+		
+		
 		</div>
 
 		<div class="row d-flex align-items-end flex-column mt-auto p-2"
@@ -48,28 +42,26 @@
 			<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark"
 				id="jumbo">
 				<p>
-					<img class="imagen" src="img/user.png" alt="An user" id="img"
-						align="right">
+					<img class="imagen" src="" alt="An user" id="img" align="right">
 				</p>
 				<h4 class=" font-italic">
 					Detalles de la asignatura relacionados el/la alumn@ <span
 						id="nombreAlumno1"></span>
 				</h4>
 				<p class="lead my-3">
-					<span id="acronimo"></span><br> 
-					<span id="curso"></span><br>
-					<span id="cuatrimestre"></span><br> 
-					<span style="margin-right: 120px;" id="creditos"></span><br> 
-				
-					<div style="text-align: center;">
-					<label style="margin-right: 120px;" for="nota">Nota Asignatura: <input id="nota"
-						name="nota" type="text" value="" class="form-control"
-						style="width: 105.5px;"></label>
+					<span id="acronimo"></span><br> <span id="curso"></span><br>
+					<span id="cuatrimestre"></span><br> <span
+						style="margin-right: 120px;" id="creditos"></span><br>
+				<div style="text-align: center;">
+					<label style="margin-right: 120px;" for="nota">Nota
+						Asignatura: <input id="nota" name="nota" type="text" value=""
+						class="form-control" style="width: 105.5px;">
+					</label>
 				</div>
 				<p align="right">
 					<button class="btn btn-primary" id="Save" style="margin-top: 5px;">Guardar</button>
-				</p>	
-					
+				</p>
+
 				</p>
 
 			</div>
@@ -134,7 +126,10 @@
 											var curso = receivedData[4];
 											var cuatrimestre = receivedData[5];
 											var creditos = receivedData[6];
+											var img = receivedData[7];
 
+											var image = document
+													.getElementById("img");
 											var p = document
 													.getElementById("nombreAlumno1");
 											var sAcronimo = document
@@ -157,21 +152,22 @@
 													+ cuatrimestre[1];
 											sCreditos.innerHTML = "Créditos: "
 													+ creditos[1];
-
-											
+											image.src = "data:image/png;base64,"
+													+ img[1];
 
 										}
 									});
-							
+
 							var $doc = $(this);
 							$("#Save")
 									.click(
 											function(e) {
-												e
-														.preventDefault();
+												e.preventDefault();
 												var nota = $('#nota').val();
-												var dni=searchParams.get('dni');
-												var acronimo=searchParams.get('acronimo');
+												var dni = searchParams
+														.get('dni');
+												var acronimo = searchParams
+														.get('acronimo');
 												var url = "/NOL/profesor/CambiarNotaAlumno?nota="
 														+ nota
 														+ "&dni="
@@ -185,8 +181,7 @@
 															type : 'PUT',
 															success : function(
 																	data,
-																	status,
-																	xhr) {
+																	status, xhr) {
 																window.location
 																		.reload(true);
 															},
@@ -194,8 +189,7 @@
 																	xhr,
 																	status,
 																	error) {
-																$(
-																		'#msg')
+																$('#msg')
 																		.html(
 																				'<span style=\'color:red;\'>'
 																						+ error
@@ -207,8 +201,7 @@
 
 						});
 		$("#Save").click(function() {
-			window.location
-			.reload(true);
+			window.location.reload(true);
 		});
 		$(".boton-cerrar-sesion").click(function() {
 			alert("Para cerrar sesión es necesario reiniciar el navegador!");

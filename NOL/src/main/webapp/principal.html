@@ -29,10 +29,7 @@
 
 		<!-- Inicio encabezado -->
 		<div class="row align-items-start" id="encabezado">
-			<div class="col-sm-4" id="img-wrap">
-				<a href="https://www.upv.es/"> <img src="img/logo3.png" alt="">
-				</a>
-			</div>
+			<div class="col-sm-4" id="img-wrap"></div>
 
 			<div class="col-sm-6">
 				<h1 class="text-center" id="bienvenida">Bienvenid@ a Notas
@@ -52,7 +49,7 @@
 			<div class="row" id="usuario">
 				<div class="col-sm-3 formulario">
 
-					<div class="row justify-content-center margin-h2">
+					<div class="row justify-content-center margin-h2" id="acceso">
 						<h2 class="text-center encabezado-form">Acceso Alumnos</h2>
 					</div>
 
@@ -74,7 +71,7 @@
 
 				<!-- Inicio formulario acceso profesores -->
 				<div class="col-sm-3 formulario" id="profesor">
-					<div class="row justify-content-center margin-h2">
+					<div class="row justify-content-center margin-h2" id="acceso">
 						<h2 class="text-center encabezado-form">Acceso Profesores</h2>
 					</div>
 					<form>
@@ -99,10 +96,10 @@
 				<!-- No sabemos si hace falta poner el grupo -->
 				<div class="col-sm-3" id="grupo">
 
-					<h3 id="encabezado-grupo" class="text-center">Grupo TI21-G01</h3>
+					<h3 id="encabezado-grupo" class="text-center" id="acceso">Grupo TI21-G01</h3>
 
 					<!-- Lista mediante bootstrap -->
-					<ul class="list-group">
+					<ul class="list-group" id="grupo-DEW">
 						<li
 							class="list-group-item d-flex justify-content-start align-items-center">
 							<span class="badge badge-primary badge-pill">1</span> Andrés
@@ -136,6 +133,7 @@
 					</ul>
 
 				</div>
+				<br>
 			</div>
 		</main>
 		<!-- Fin main -->

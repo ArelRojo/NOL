@@ -61,11 +61,11 @@ public class DatosAsignaturasAlumno extends HttpServlet {
 		String user = this.parseAuthorizationBasic(authHeader);
 		
 		Map<String, String> alumnos = new HashMap<String,String>();
-		alumnos.put("93847525G", "123456");
-		alumnos.put("12345678W", "123456");
-		alumnos.put("23456387R", "123456");
-		alumnos.put("34567891F", "123456");
-		alumnos.put("37264096W", "123456");
+		alumnos.put("93847525G", "123456"); 
+		alumnos.put("12345678W", "123456"); 
+		alumnos.put("23456387R", "123456");  
+		alumnos.put("34567891F", "123456"); 
+		alumnos.put("37264096W", "123456"); 
 		
 		Map<String,String> usuarioAuth = new HashMap<String,String>();
 		

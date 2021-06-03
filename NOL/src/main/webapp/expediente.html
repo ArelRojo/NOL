@@ -122,6 +122,7 @@
 				var acronimos = receivedData[0];
 				var nombresAsignaturas = receivedData[1];
 				var notas = receivedData[2];
+				if(acronimos[1].length>0){
 				for(i = 0; i< acronimos.length; i++){
 					
 					var row = body.insertRow(0);
@@ -132,6 +133,7 @@
 					var cell3 = row.insertCell(2);
 					cell3.innerHTML = notas[1][i];
 					
+				}
 				}
 				var nombreAlumno = receivedData[3];
 				var dni = receivedData[4];

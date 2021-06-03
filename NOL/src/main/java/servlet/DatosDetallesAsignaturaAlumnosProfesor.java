@@ -1,12 +1,17 @@
 package servlet;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +60,7 @@ public class DatosDetallesAsignaturaAlumnosProfesor extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		ServletContext cntx = request.getServletContext();
 		final String RUTA = getServletConfig().getInitParameter("ruta");
 		String authHeader = (String) request.getSession().getAttribute("authHeader");
 
@@ -109,6 +115,16 @@ public class DatosDetallesAsignaturaAlumnosProfesor extends HttpServlet {
 				DetallesAsignatura asignatura = this.getAsignatura(acronimo, key, httpClient);
 				String nombre_alumno = this.getNombreUsuario(dniAlumno, key, httpClient);
 				
+				
+				String carpeta = getServletConfig().getInitParameter("directorio_imagenes");
+				String path = request.getServletContext().getContextPath();
+				String otherPath = request.getServletContext().getRealPath("img");
+				
+				
+				BufferedReader origen = new BufferedReader(new FileReader(otherPath + "/"+dniAlumno + ".pngb64"));
+				String linea = origen.readLine();
+				
+				
 				response.setContentType("application/json");
 				
 				JsonObject json = new JsonObject();
@@ -122,6 +138,7 @@ public class DatosDetallesAsignaturaAlumnosProfesor extends HttpServlet {
 				datos.add("curso",JsonParser.parseString(gson.toJson(asignatura.getCurso())));
 				datos.add("cuatrimestre",JsonParser.parseString(gson.toJson(asignatura.getCuatrimestre())));
 				datos.add("creditos",JsonParser.parseString(gson.toJson(asignatura.getCreditos())));
+				datos.add("img",JsonParser.parseString(gson.toJson(linea)));
 				
 				array.add(datos);
 				json.add("jsonArray", array);
@@ -130,6 +147,7 @@ public class DatosDetallesAsignaturaAlumnosProfesor extends HttpServlet {
 				PrintWriter pw = response.getWriter(); 
 		        pw.print(json.toString());
 		        pw.close();
+		        origen.close();
 				
 			} else {
 				System.out.println(httpResponse.getStatusLine().getStatusCode());

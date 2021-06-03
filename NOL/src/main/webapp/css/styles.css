@@ -174,7 +174,7 @@ form .row {
 #encabezado-grupo{
 	font-size: 16px;
 /* 	text-align: center; */
-	background-color: #f9bf5b;
+	background-color: #84EEDE;
 	border: 1px solid black;
 	border-radius: 4px;
 	height: 30px;
@@ -229,3 +229,7 @@ a{
 #nombreAlumno1{
 	color: white;
 }
+#acceso{
+	background-color: #84EEDE;
+}
+#grupo-DEW{margin-bottom: 20px;}
