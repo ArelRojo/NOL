@@ -38,7 +38,7 @@
 		</div>
 		<div class="well">
 			<div class="rounded float-right">
-				<img class="image" src="img/user.png" alt="An user" id="img">
+				<img class="imagen" src="" alt="An user" id="img">
 			</div>
 			<p><b>DEW - Centro Educativo</b> certifica que D/Dª <b><span id="nombreAlumno"></span></b>, con DNI <span id="dni"></span>, matriculado/a en el curso 
 			2020/21, ha obtenido las calificaciones que se muestran en la siguiente tabla.</p>
@@ -142,6 +142,11 @@
 				span1.innerHTML = nombreAlumno[1];
 				var span2 = document.getElementById("dni");
 				span2.innerHTML = dni[1];
+				var image = document
+				.getElementById("img");
+				var img = receivedData[5];
+				image.src = "data:image/png;base64,"
+					+ img[1];
 				
 			}
 			

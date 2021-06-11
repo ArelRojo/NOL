@@ -1,5 +1,7 @@
 package servlet;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
@@ -116,6 +118,12 @@ public class DatosExpediente extends HttpServlet {
 					notas.add(nota);
 				}
 				
+				String otherPath = request.getServletContext().getRealPath("img");
+				
+				
+				BufferedReader origen = new BufferedReader(new FileReader(otherPath + "/"+ dni + ".pngb64"));
+				String linea = origen.readLine();
+				
 				response.setContentType("application/json");
 				
 				JsonObject json = new JsonObject();
@@ -131,6 +139,7 @@ public class DatosExpediente extends HttpServlet {
 				List<String> dniAlumno = new ArrayList<String>();
 				dniAlumno.add(dni);
 				datos.add("dni", JsonParser.parseString(gson.toJson(dni)));
+				datos.add("img",JsonParser.parseString(gson.toJson(linea)));
 				
 				array.add(datos);
 				json.add("jsonArray", array);
@@ -138,6 +147,7 @@ public class DatosExpediente extends HttpServlet {
 				PrintWriter pw = response.getWriter(); 
 		        pw.print(json.toString());
 		        pw.close();
+		        origen.close();
 			}else {
 				System.out.println(httpResponse.getStatusLine().getStatusCode());
 			}

@@ -115,9 +115,6 @@ public class DatosDetallesAsignaturaAlumnosProfesor extends HttpServlet {
 				DetallesAsignatura asignatura = this.getAsignatura(acronimo, key, httpClient);
 				String nombre_alumno = this.getNombreUsuario(dniAlumno, key, httpClient);
 				
-				
-				String carpeta = getServletConfig().getInitParameter("directorio_imagenes");
-				String path = request.getServletContext().getContextPath();
 				String otherPath = request.getServletContext().getRealPath("img");
 				
 				

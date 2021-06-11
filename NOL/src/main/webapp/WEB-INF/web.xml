@@ -216,10 +216,6 @@
       <param-name>ruta</param-name>
       <param-value>http://localhost:9090/CentroEducativo</param-value>
     </init-param>
-    <init-param>
-      <param-name>directorio_imagenes</param-name>
-      <param-value>src/main/webapp/img</param-value>
-    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>DatosDetallesAsignaturaAlumnosProfesor</servlet-name>
